@@ -1,0 +1,13 @@
+.login {
+    height: 110px;
+    width: 190px;
+    margin: auto;
+    border: 100px black solid;
+    padding: 10px;
+    box-shadow: 1px 1px 5px #ccc;
+}
+
+.login input {
+    padding: 5px;
+    margin: 5px
+}

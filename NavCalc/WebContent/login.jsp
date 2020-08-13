@@ -1,0 +1,73 @@
+<%@ page language="java" contentType="text/html; UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+	<title>Login</title>
+	<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/estilos.css">
+	<!--===============================================================================================-->
+</head>
+<body>
+<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50">
+				<form class="login100-form validate-form" action="servletLogin" method="post">
+					<span class="login100-form-title p-b-33">
+						Login
+					</span>
+
+					<div class="wrap-input100 validate-input" data-validate="Nome de usuário obrigatório">
+						<input class="input100" type="text" name="email" placeholder="Usuário">
+						<span class="focus-input100-1"></span>
+						<span class="focus-input100-2"></span>
+					</div>
+
+					<div class="wrap-input100 rs1 validate-input" data-validate="Senha obrigatória">
+						<input class="input100" type="password" name="senha" placeholder="Senha">
+						<span class="focus-input100-1"></span>
+						<span class="focus-input100-2"></span>
+					</div>
+					
+					<div style="background: #ff6666; color: white;"><%= request.getAttribute("msgErro") %></div>
+					
+
+					<div class="container-login100-form-btn m-t-20">
+						<button class="login100-form-btn">
+							Logar
+						</button>
+					</div>
+
+					<div class="text-center">
+						<span class="txt1">
+							Deseja se cadastrar?
+						</span>
+
+						<a href="cadastro.html" class="txt2 hov1">
+							Cadastro
+						</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

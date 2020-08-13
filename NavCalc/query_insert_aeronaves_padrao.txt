@@ -1,0 +1,7 @@
+INSERT INTO aeronaves_padrao (tipo,velocidadeCruzeiro,velocidadeSubida,velocidadeDescida,razaoSubida,razaoDescida,consumo) VALUES
+("AB11",78,60,78,500,500,25),
+("C150",75,65,75,500,500,20),
+("C152",100,85,100,500,500,23),
+("C172",110,90,110,400,500,32),
+("C182",140,85,140,500,500,53),
+("P28A",110,80,110,700,500,38);
