@@ -16,13 +16,19 @@
 </head>
 
 <body>
+<% try{
+	String usuario = request.getSession().getAttribute("email").toString();
+}catch(NullPointerException npe){
+	request.setAttribute("msgErro", "É necessário estar logado para acessar o sistema.");
+	request.getRequestDispatcher("login.jsp").forward(request, response);
+} %>
 	<div class="topnav">
-  <a href="painel.jsp">Painel Principal</a>
-  <a class="active" href="planejamento.jsp">Planejamento</a>
-  <a href="rotas_salvas.jsp">Rotas Salvas</a>
-  <a href="aeronaves.jsp">Aeronaves</a>
-  <label class="logoff" onclick="">Logoff</label>
-  <label class="usuario"><%= request.getSession().getAttribute("email") %></label>
+		<a href="painel.jsp">Painel Principal</a>
+  		<form name="navegacao" action="servletNavegacao" method="post"><a class="active" href="javascript:navegacao.submit()">Planejamento</a></form> 
+		<form name="planejamentos_salvos" action="servletPlanejamentosSalvos" method="post"><a href="javascript:navegacao.submit()">Rotas Salvas</a> </form> 
+		<form name="gerencia_aeronaves" action="servletGerenciaAeronaves" method="post"><a href="javascript:navegacao.submit()">Aeronaves</a> </form> 
+		<form name="logoff" action="servletLogoff" method="post"><label class="logoff" onclick="javascript:logoff.submit()">Logoff</label></form>
+		<label class="usuario"><%= request.getSession().getAttribute("email").toString() %></label>
 </div>
 
 <form action="servletCalculaNavegacao" method="post">
@@ -80,6 +86,7 @@ Para cada ponto, digite o nome do fixo ou uma coordenada no formato ######(N/S)#
 	double distanciatotal = 0;
 	int tempototal = 0;
 	int consumototal = 0;
+	out.println("Consumo da aeronave em litros: " + planejamento.getAeronave().getConsumo());
 	out.print("<table><tr><th>De</th><th>Para</th><th>Rumo</th><th>Distancia</th><th>Tempo</th><th>Consumo</th></tr>");
 	for(int i = 0; i < trechos.size(); i++){
 		double distancia = trechos.get(i).getDistancia();

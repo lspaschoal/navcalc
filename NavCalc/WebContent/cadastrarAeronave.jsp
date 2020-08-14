@@ -9,11 +9,18 @@
 <link rel="stylesheet" type="text/css" href="css/estilos.css">
 </head>
 <body>
+<% try{
+	String usuario = request.getSession().getAttribute("email").toString();
+}catch(NullPointerException npe){
+	request.setAttribute("msgErro", "É necessário estar logado para acessar o sistema.");
+	request.getRequestDispatcher("login.jsp").forward(request, response);
+} %>
 <div class="topnav">
-		<a class="active" href="painel.jsp">Painel Principal</a> <a
-			href="planejamento.jsp">Planejamento</a> <a href="rotas_salvas.jsp">Rotas
-			Salvas</a> <a href="aeronaves.jsp">Aeronaves</a> <label class="logoff"
-			onclick="">Logoff</label> <label class="usuario"><%=request.getSession().getAttribute("email")%></label>
+		<a class="active" href="painel.jsp">Painel Principal</a>
+		<form name="navegacao" action="servletNavegacao" method="post"><a href="javascript:navegacao.submit()">Planejamento</a></form> 
+		<form name="planejamentos_salvos" action="servletPlanejamentosSalvos" method="post"><a href="javascript:navegacao.submit()">Rotas Salvas</a> </form> 
+		<form name="gerencia_aeronaves" action="servletGerenciaAeronaves" method="post"><a class="active" href="javascript:navegacao.submit()">Aeronaves</a> </form> 
+		<form name="logoff" action="servletLogoff" method="post"><label class="logoff" onclick="javascript:navegacao.submit()">Logoff</label></form>
 </div>
 <form action="servletCadastraAeronavePersonalizada" method="post">
 <table>

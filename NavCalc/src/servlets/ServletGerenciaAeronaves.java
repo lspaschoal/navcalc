@@ -23,10 +23,18 @@ public class ServletGerenciaAeronaves extends HttpServlet{
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		ModelAeronavePersonalizada map = new ModelAeronavePersonalizada();
-		ArrayList<AeronavePersonalizada> listaAeronavesUsuario = new ArrayList<AeronavePersonalizada>();
-		listaAeronavesUsuario = map.aeronavesUsuario(Long.parseLong(request.getSession().getAttribute("id").toString()));
-		request.setAttribute("listaAeronavesUsuario", listaAeronavesUsuario);
-		request.getRequestDispatcher("aeronaves.jsp").forward(request, response);
+		
+		try {
+			ModelAeronavePersonalizada map = new ModelAeronavePersonalizada();
+			ArrayList<AeronavePersonalizada> listaAeronavesUsuario = new ArrayList<AeronavePersonalizada>();
+			listaAeronavesUsuario = map.aeronavesUsuario(Long.parseLong(request.getSession().getAttribute("id").toString()));
+			request.setAttribute("listaAeronavesUsuario", listaAeronavesUsuario);
+			request.getRequestDispatcher("aeronaves.jsp").forward(request, response);
+		}catch(NullPointerException npe) {
+			request.setAttribute("msgErro", "É necessário estar logado para acessar o sistema.");
+			request.getRequestDispatcher("login.jsp").forward(request, response);
+		}
+			
+
 	}
 }
