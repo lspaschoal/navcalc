@@ -86,7 +86,7 @@ public class ModelUsuario {
 					msgErro = "Erro: Ocorreu um erro durante o cadastro. Por favor, tente novamente.";
 				}
 			} else {
-				msgErro = "Erro: Falha na conex�o com o banco de dados.";
+				msgErro = "Erro: Falha na conexão com o banco de dados.";
 			}
 		} catch (SQLException e) {
 			msgErro = "Erro de SQL: " + e.toString();

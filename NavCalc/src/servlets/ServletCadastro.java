@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import controller.Usuario;
+import model.ModelDados;
 
 @WebServlet("/servletCadastro") // mapeamento do servlet
 public class ServletCadastro extends HttpServlet{
@@ -21,9 +22,16 @@ public class ServletCadastro extends HttpServlet{
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		// inicialização do banco de dados, garantindo a criação da tabela de usuários caso não exista
+		ModelDados md = new ModelDados();
+		
+		/*
+		 *  leitura do cadastro
+		 */
 		Usuario user;
 		boolean cadastro_valido = true;
-		// lendo on nome
+		
+		// lendo o nome
 		String nome = request.getParameter("nome");
 		if(nome == null || nome.equals("")) {
 			request.setAttribute("erroNome", "*O preenchimento do nome é obrigatório.");
@@ -31,6 +39,7 @@ public class ServletCadastro extends HttpServlet{
 		}else {
 			request.setAttribute("erroNome", "");
 		}
+		
 		// lendo o sobrenome
 		String sobrenome = request.getParameter("sobrenome");
 		if(sobrenome == null || sobrenome.equals("")) {
@@ -39,6 +48,7 @@ public class ServletCadastro extends HttpServlet{
 		}else {
 			request.setAttribute("erroSobreNome", "");
 		}
+		
 		// lendo a data de nascimento
 		String dtnasc = request.getParameter("dtnascimento");
 		int ano = 0, mes = 0, dia = 0;
@@ -55,6 +65,7 @@ public class ServletCadastro extends HttpServlet{
 				cadastro_valido = false;
 			}
 		}
+		
 		// lendo o email
 		String email = request.getParameter("email");
 		if(email == null || email.equals("")) {
@@ -63,6 +74,7 @@ public class ServletCadastro extends HttpServlet{
 		}else {
 			request.setAttribute("erroEmail", "");
 		}
+		
 		// lendo a senha
 		String senha = request.getParameter("senha");
 		if(senha == null || senha.equals("")) {
@@ -71,6 +83,7 @@ public class ServletCadastro extends HttpServlet{
 		}else {
 			request.setAttribute("erroSenha", "");
 		}
+		
 		// lendo a confirmação de senha
 		String confirmasenha = request.getParameter("confirmasenha");
 		if(confirmasenha == null || confirmasenha.equals("")) {
@@ -85,7 +98,8 @@ public class ServletCadastro extends HttpServlet{
 			}
 			request.setAttribute("erroConfirmaSenha", "");
 		}
-		// efetuando o cadastro
+		
+		// validação e efetivação
 		if(cadastro_valido) {
 			System.out.println("cadastro valido");
 			user = new Usuario();

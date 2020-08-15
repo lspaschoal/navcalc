@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import controller.Usuario;
+import model.ModelDados;
 
 
 
@@ -23,8 +24,29 @@ public class ServletLogin extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		/*
+		 * inicialização do sistema
+		 */
+		ModelDados md = new ModelDados();
+		// caminhos para os arquivos que contém os dados de aeródromos, fixos e aeronaves padrão do sistema
+		String arquivo_aerodromos = getServletContext().getRealPath("\\queries\\query_insert_aerodromos.txt");
+		String arquivo_fixos = getServletContext().getRealPath("\\queries\\query_insert_fixos.txt");
+		String arquivo_aeronaves = getServletContext().getRealPath("\\queries\\query_insert_aeronaves_padrao.txt");
+		// caso a tabela não esteja preenchida, o sistema insere os dados a partir do arquivo txt com a query
+		if(md.tabelaVazia("aerodromos")) {
+			md.inserir(arquivo_aerodromos);
+		}
+		if(md.tabelaVazia("fixos")) {
+			md.inserir(arquivo_fixos);
+		}
+		if(md.tabelaVazia("aeronaves_padrao")) {
+			md.inserir(arquivo_aeronaves);
+		}
+		
+		// lendo os dados de login
 		String email = request.getParameter("email");
 		String senha = request.getParameter("senha");
+				
 		
 		if(email.equals("") || email == null || senha.equals("") || senha == null) {
 			request.setAttribute("msgErro", "Email e senha são obrigatórios para logar.");

@@ -8,6 +8,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import model.ModelDados;
+
 public class Teste {
 
 	public static void main(String[] args) {
@@ -42,17 +44,17 @@ public class Teste {
 //		for(Trecho t: trechos) {
 //			System.out.println(t.getInicio().toString() + " / " + t.getFim().toString() + " | " + t.getDistancia() + "nm | " + t.getRumo() + " | " + t.getTempoMinutos());
 //		}
-		Session session;
-		try {
-			SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-			// pegando as configurações na session factory do arquivo hibernate.cfg.xml
-			session = sessionFactory.openSession();
-			// abrindo uma sessão/conexao
-			session.close();
-			// fechando a conexao
-		} catch (HibernateException e) {
-			System.out.println("Erro: " + e.toString());
-		}
+//		Session session;
+//		try {
+//			SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+//			// pegando as configurações na session factory do arquivo hibernate.cfg.xml
+//			session = sessionFactory.openSession();
+//			// abrindo uma sessão/conexao
+//			session.close();
+//			// fechando a conexao
+//		} catch (HibernateException e) {
+//			System.out.println("Erro: " + e.toString());
+//		}
 		
 	}
 

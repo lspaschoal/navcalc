@@ -79,25 +79,4 @@ public class ModelAerodromo {
 	public String getMsgErro() {
 		return this.msgErro;
 	}
-	
-//	public Aerodromo getAerodromo(String icao) {
-//		Session session = HibernateUtil.abrirSession();
-//		session.beginTransaction();
-//		try {
-//			String sql = "SELECT id FROM aerodromos WHERE icao = :icao";
-//			Query query = session.createQuery(sql);
-//			query.setParameter("icao", icao);
-//			@SuppressWarnings("rawtypes")
-//			List list = query.getResultList();
-//			if (list == null || list.size() == 0) {
-//				return null;
-//			} else {
-//				return session.get(Aerodromo.class, Long.parseLong(list.get(0).toString()));
-//
-//			}
-//		} catch (Exception e) {
-//			System.out.println("Erro no verificarLogin(): "+e.toString());
-//			return null;
-//		}
-//	}
 }
