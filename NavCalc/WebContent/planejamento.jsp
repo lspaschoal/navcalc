@@ -16,7 +16,8 @@
 </head>
 
 <body>
-<% try{
+<% 
+try{
 	String usuario = request.getSession().getAttribute("email").toString();
 }catch(NullPointerException npe){
 	request.setAttribute("msgErro", "É necessário estar logado para acessar o sistema.");
@@ -35,18 +36,20 @@
 <label for="idorigem">Aeródromo de origem: </label><input type="text" placeholder="código ICAO" name="origem" id="idorigem" value="<%= request.getAttribute("origem_digitada") %>" required>
 <label style="color: #990000; padding-left: 10px;"><%= request.getAttribute("erroOrigem") %></label>
 <div id="rota">
-Para cada ponto, digite o nome do fixo ou uma coordenada no formato ######(N/S)#######(W/E):<br>
-<label>Fixo 01: </label><input type="text" name="fixo1" placeholder="nome ou coordenada" value="<%= request.getAttribute("coordenada_digitada1") %>"><label style="color: #990000; padding-left: 10px;"><%= request.getAttribute("erroFixo1") %></label><br>
-<label>Fixo 02: </label><input type="text" name="fixo2" placeholder="nome ou coordenada" value="<%= request.getAttribute("coordenada_digitada2") %>"><label style="color: #990000; padding-left: 10px;"><%= request.getAttribute("erroFixo2") %></label><br>
-<label>Fixo 03: </label><input type="text" name="fixo3" placeholder="nome ou coordenada" value="<%= request.getAttribute("coordenada_digitada3") %>"><label style="color: #990000; padding-left: 10px;"><%= request.getAttribute("erroFixo3") %></label><br>
-<label>Fixo 04: </label><input type="text" name="fixo4" placeholder="nome ou coordenada" value="<%= request.getAttribute("coordenada_digitada4") %>"><label style="color: #990000; padding-left: 10px;"><%= request.getAttribute("erroFixo4") %></label><br>
-<label>Fixo 05: </label><input type="text" name="fixo5" placeholder="nome ou coordenada" value="<%= request.getAttribute("coordenada_digitada5") %>"><label style="color: #990000; padding-left: 10px;"><%= request.getAttribute("erroFixo5") %></label><br>
-<label>Fixo 06: </label><input type="text" name="fixo6" placeholder="nome ou coordenada" value="<%= request.getAttribute("coordenada_digitada6") %>"><label style="color: #990000; padding-left: 10px;"><%= request.getAttribute("erroFixo6") %></label><br>
-<label>Fixo 07: </label><input type="text" name="fixo7" placeholder="nome ou coordenada" value="<%= request.getAttribute("coordenada_digitada7") %>"><label style="color: #990000; padding-left: 10px;"><%= request.getAttribute("erroFixo7") %></label><br>
-<label>Fixo 08: </label><input type="text" name="fixo8" placeholder="nome ou coordenada" value="<%= request.getAttribute("coordenada_digitada8") %>"><label style="color: #990000; padding-left: 10px;"><%= request.getAttribute("erroFixo8") %></label><br>
-<label>Fixo 09: </label><input type="text" name="fixo9" placeholder="nome ou coordenada" value="<%= request.getAttribute("coordenada_digitada9") %>"><label style="color: #990000; padding-left: 10px;"><%= request.getAttribute("erroFixo9") %></label><br>
-<label>Fixo 10: </label><input type="text" name="fixo10" placeholder="nome ou coordenada" value="<%= request.getAttribute("coordenada_digitada10") %>"><label style="color: #990000; padding-left: 10px;"><%= request.getAttribute("erroFixo10") %></label><br>
 </div>
+<!-- <div> -->
+<!-- Para cada ponto, digite o nome do fixo ou uma coordenada no formato ######(N/S)#######(W/E):<br> -->
+<%-- <label>Fixo 01: </label><input type="text" name="fixo1" placeholder="nome ou coordenada" value="<%= request.getAttribute("coordenada_digitada1") %>"><label style="color: #990000; padding-left: 10px;"><%= request.getAttribute("erroFixo1") %></label><br> --%>
+<%-- <label>Fixo 02: </label><input type="text" name="fixo2" placeholder="nome ou coordenada" value="<%= request.getAttribute("coordenada_digitada2") %>"><label style="color: #990000; padding-left: 10px;"><%= request.getAttribute("erroFixo2") %></label><br> --%>
+<%-- <label>Fixo 03: </label><input type="text" name="fixo3" placeholder="nome ou coordenada" value="<%= request.getAttribute("coordenada_digitada3") %>"><label style="color: #990000; padding-left: 10px;"><%= request.getAttribute("erroFixo3") %></label><br> --%>
+<%-- <label>Fixo 04: </label><input type="text" name="fixo4" placeholder="nome ou coordenada" value="<%= request.getAttribute("coordenada_digitada4") %>"><label style="color: #990000; padding-left: 10px;"><%= request.getAttribute("erroFixo4") %></label><br> --%>
+<%-- <label>Fixo 05: </label><input type="text" name="fixo5" placeholder="nome ou coordenada" value="<%= request.getAttribute("coordenada_digitada5") %>"><label style="color: #990000; padding-left: 10px;"><%= request.getAttribute("erroFixo5") %></label><br> --%>
+<%-- <label>Fixo 06: </label><input type="text" name="fixo6" placeholder="nome ou coordenada" value="<%= request.getAttribute("coordenada_digitada6") %>"><label style="color: #990000; padding-left: 10px;"><%= request.getAttribute("erroFixo6") %></label><br> --%>
+<%-- <label>Fixo 07: </label><input type="text" name="fixo7" placeholder="nome ou coordenada" value="<%= request.getAttribute("coordenada_digitada7") %>"><label style="color: #990000; padding-left: 10px;"><%= request.getAttribute("erroFixo7") %></label><br> --%>
+<%-- <label>Fixo 08: </label><input type="text" name="fixo8" placeholder="nome ou coordenada" value="<%= request.getAttribute("coordenada_digitada8") %>"><label style="color: #990000; padding-left: 10px;"><%= request.getAttribute("erroFixo8") %></label><br> --%>
+<%-- <label>Fixo 09: </label><input type="text" name="fixo9" placeholder="nome ou coordenada" value="<%= request.getAttribute("coordenada_digitada9") %>"><label style="color: #990000; padding-left: 10px;"><%= request.getAttribute("erroFixo9") %></label><br> --%>
+<%-- <label>Fixo 10: </label><input type="text" name="fixo10" placeholder="nome ou coordenada" value="<%= request.getAttribute("coordenada_digitada10") %>"><label style="color: #990000; padding-left: 10px;"><%= request.getAttribute("erroFixo10") %></label><br> --%>
+<!-- </div> -->
 
 <label for="iddestino">Aeródromo de destino: </label><input type="text" placeholder="código ICAO" name="destino" id="iddestino" value="<%= request.getAttribute("destino_digitado") %>" required>
 <label style="color: #990000; padding-left: 10px;"><%= request.getAttribute("erroDestino") %></label><br>
@@ -118,7 +121,7 @@ Para cada ponto, digite o nome do fixo ou uma coordenada no formato ######(N/S)#
 			+ "</td></tr></table>");
 }%>
 </div>
- <!-- <script src="./js/rota.js"></script> -->
+ <script src="./js/rota.js"></script>
  <script src="./js/mostraAltitude.js"></script>
 </body>
 

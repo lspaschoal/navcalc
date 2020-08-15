@@ -46,6 +46,26 @@ public class ModelUsuario {
 		}
 	}
 	
+	public boolean usuarioExistente(String email) {
+		Long id = 0L;
+		try {
+			abrirConn();
+			if (conn != null && !conn.isClosed()) {
+				String sql = "SELECT id FROM usuarios WHERE email = ?;";
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				stmt.setString(1, email);
+				ResultSet rs = stmt.executeQuery();
+				if (rs.next()) {
+					id = rs.getLong(1);
+				}
+			}
+		} catch (SQLException e) {
+			msgErro = "Erro de SQL: " + e.toString();
+		}
+		fecharConn();
+		return (id > 0L);
+	}
+	
 	public Long verificarLogin(String usuario, String senha) {
 		Long id = -1L;
 		try {

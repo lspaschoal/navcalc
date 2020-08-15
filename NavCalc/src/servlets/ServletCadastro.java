@@ -28,7 +28,7 @@ public class ServletCadastro extends HttpServlet{
 		/*
 		 *  leitura do cadastro
 		 */
-		Usuario user;
+		Usuario user = new Usuario();
 		boolean cadastro_valido = true;
 		
 		// lendo o nome
@@ -71,6 +71,9 @@ public class ServletCadastro extends HttpServlet{
 		if(email == null || email.equals("")) {
 			request.setAttribute("erroEmail", "*O preenchimento do email é obrigatório.");
 			cadastro_valido = false;
+		}else if(user.usuarioExistente(email)){
+			request.setAttribute("erroEmail", "E-mail já cadastrado.");
+			cadastro_valido = false;
 		}else {
 			request.setAttribute("erroEmail", "");
 		}
@@ -101,9 +104,6 @@ public class ServletCadastro extends HttpServlet{
 		
 		// validação e efetivação
 		if(cadastro_valido) {
-			System.out.println("cadastro valido");
-			user = new Usuario();
-			System.out.println("criou o usuario");
 			user.setNome(nome);
 			user.setSobrenome(sobrenome);
 			LocalDate dtnascimento = LocalDate.of(ano, mes, dia);

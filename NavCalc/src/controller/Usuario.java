@@ -67,6 +67,11 @@ public class Usuario {
 			return false;
 		}	
 	}
+	
+	public boolean usuarioExistente(String email) {
+		ModelUsuario mu = new ModelUsuario();
+		return mu.usuarioExistente(email);
+	}
 
 	public long getId() {
 		return id;
