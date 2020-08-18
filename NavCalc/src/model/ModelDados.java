@@ -78,22 +78,27 @@ public class ModelDados {
 		return false;
 	}
 	
-	public boolean tabelaVazia(String nome_tabela) {
+	public int totalRegistros(String nome_tabela) {
 		int total = 0;
+		abrirConn();
 		try {
 			if (conn != null && !conn.isClosed()) {
-				String sql = "SELECT count(id) FROM ?;";
+				String sql = "SELECT COUNT(*) FROM " + nome_tabela + ";";
 				PreparedStatement stmt = conn.prepareStatement(sql);
-				stmt.setString(1, nome_tabela);
 				ResultSet rs = stmt.executeQuery();
-				if (rs.next()) {
+				if(rs.next()) {
 					total = rs.getInt(1);
 				}
 			}
 		} catch (SQLException e) {
 			msgErro = "Erro de SQL: " + e.toString();
 		}
-		return (total == 0);
+		fecharConn();
+		return total;
+	}
+	
+	public boolean tabelaVazia(String nome_tabela) {
+		return totalRegistros(nome_tabela) == 0;
 	}
 	
 	private String lerArquivo(String arquivo) {

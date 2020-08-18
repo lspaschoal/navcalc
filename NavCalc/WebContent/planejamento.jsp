@@ -32,32 +32,34 @@ try{
 		<label class="usuario"><%= request.getSession().getAttribute("email").toString() %></label>
 </div>
 
-<form action="servletCalculaNavegacao" method="post">
-<label for="idorigem">Aeródromo de origem: </label><input type="text" placeholder="código ICAO" name="origem" id="idorigem" value="<%= request.getAttribute("origem_digitada") %>" required>
-<label style="color: #990000; padding-left: 10px;"><%= request.getAttribute("erroOrigem") %></label>
+<form>
+<label for="idorigem">Aeródromo de origem: </label><input type="text" placeholder="código ICAO" name="origem" id="idorigem" value="<% if(request.getAttribute("origem_digitada") != null) out.print(request.getAttribute("origem_digitada")); %>">
+<label style="color: #990000; padding-left: 10px;"><% if(request.getSession().getAttribute("erroOrigem") != null) out.print(request.getSession().getAttribute("erroOrigem")); %></label>
 <div id="rota">
+<% 
+int nfixos = Integer.parseInt(request.getSession().getAttribute("nfixos").toString());
+for(int i = 0; i < nfixos; i++){
+	
+		out.print("<label>Fixo ");
+		if(i < 9)out.print("0");
+		out.print((i+1) + ":</label><input type=\"text\" id=\"idfixo" + i + "\" name=\"fixo" + i + "\" placeholder=\"nome ou coordenada\" value=\"");
+		if(request.getAttribute("coordenada_digitada" + i) != null)out.print(request.getAttribute("coordenada_digitada" + i));
+		out.print("\">");
+		out.print("<label style=\"color: #990000; padding-left: 10px;\" name=\"erroFixo" + i + "\">");
+		if(request.getSession().getAttribute("erroFixo" + i) != null){out.print(request.getSession().getAttribute("erroFixo" + i));}
+		out.print("</label><br>");
+}
+%>
 </div>
-<!-- <div> -->
-<!-- Para cada ponto, digite o nome do fixo ou uma coordenada no formato ######(N/S)#######(W/E):<br> -->
-<%-- <label>Fixo 01: </label><input type="text" name="fixo1" placeholder="nome ou coordenada" value="<%= request.getAttribute("coordenada_digitada1") %>"><label style="color: #990000; padding-left: 10px;"><%= request.getAttribute("erroFixo1") %></label><br> --%>
-<%-- <label>Fixo 02: </label><input type="text" name="fixo2" placeholder="nome ou coordenada" value="<%= request.getAttribute("coordenada_digitada2") %>"><label style="color: #990000; padding-left: 10px;"><%= request.getAttribute("erroFixo2") %></label><br> --%>
-<%-- <label>Fixo 03: </label><input type="text" name="fixo3" placeholder="nome ou coordenada" value="<%= request.getAttribute("coordenada_digitada3") %>"><label style="color: #990000; padding-left: 10px;"><%= request.getAttribute("erroFixo3") %></label><br> --%>
-<%-- <label>Fixo 04: </label><input type="text" name="fixo4" placeholder="nome ou coordenada" value="<%= request.getAttribute("coordenada_digitada4") %>"><label style="color: #990000; padding-left: 10px;"><%= request.getAttribute("erroFixo4") %></label><br> --%>
-<%-- <label>Fixo 05: </label><input type="text" name="fixo5" placeholder="nome ou coordenada" value="<%= request.getAttribute("coordenada_digitada5") %>"><label style="color: #990000; padding-left: 10px;"><%= request.getAttribute("erroFixo5") %></label><br> --%>
-<%-- <label>Fixo 06: </label><input type="text" name="fixo6" placeholder="nome ou coordenada" value="<%= request.getAttribute("coordenada_digitada6") %>"><label style="color: #990000; padding-left: 10px;"><%= request.getAttribute("erroFixo6") %></label><br> --%>
-<%-- <label>Fixo 07: </label><input type="text" name="fixo7" placeholder="nome ou coordenada" value="<%= request.getAttribute("coordenada_digitada7") %>"><label style="color: #990000; padding-left: 10px;"><%= request.getAttribute("erroFixo7") %></label><br> --%>
-<%-- <label>Fixo 08: </label><input type="text" name="fixo8" placeholder="nome ou coordenada" value="<%= request.getAttribute("coordenada_digitada8") %>"><label style="color: #990000; padding-left: 10px;"><%= request.getAttribute("erroFixo8") %></label><br> --%>
-<%-- <label>Fixo 09: </label><input type="text" name="fixo9" placeholder="nome ou coordenada" value="<%= request.getAttribute("coordenada_digitada9") %>"><label style="color: #990000; padding-left: 10px;"><%= request.getAttribute("erroFixo9") %></label><br> --%>
-<%-- <label>Fixo 10: </label><input type="text" name="fixo10" placeholder="nome ou coordenada" value="<%= request.getAttribute("coordenada_digitada10") %>"><label style="color: #990000; padding-left: 10px;"><%= request.getAttribute("erroFixo10") %></label><br> --%>
-<!-- </div> -->
+<input type="submit" value="Adicionar" formaction="servletAdicionaFixo" formmethod="post"><br>
 
-<label for="iddestino">Aeródromo de destino: </label><input type="text" placeholder="código ICAO" name="destino" id="iddestino" value="<%= request.getAttribute("destino_digitado") %>" required>
-<label style="color: #990000; padding-left: 10px;"><%= request.getAttribute("erroDestino") %></label><br>
-<label for="idaltitude">Altitude: </label><input type="range" min="1000" max="14500" step="500" value="3500" name="altitude" id="idaltitude" onchange="mostraAltitudeSelecionada(this.value);" required>
-<label id="label_altitude">3500ft</label>
+<label for="iddestino">Aeródromo de destino: </label><input type="text" placeholder="código ICAO" name="destino" id="iddestino" value="<% if(request.getAttribute("destino_digitado") != null) out.print(request.getAttribute("destino_digitado")); %>">
+<label style="color: #990000; padding-left: 10px;"><% if(request.getSession().getAttribute("erroDestino") != null) out.print(request.getSession().getAttribute("erroDestino")); %></label><br>
+<label for="idaltitude">Altitude: </label><input type="range" min="1000" max="14500" step="500" name="altitude" id="idaltitude" onchange="mostraAltitudeSelecionada(this.value);" value="<% if(request.getAttribute("altitude_escolhida") != null) {out.print(request.getAttribute("altitude_escolhida"));}else{out.print(3500);} %>">
+<label id="label_altitude"><% if(request.getAttribute("altitude_escolhida") != null) {out.print(request.getAttribute("altitude_escolhida"));}else{out.print(3500);} %>ft</label>
 <br>
 <label for="idaltitude">Aeronave: </label>
-<select name="aeronave" id="idaeronave" required>
+<select name="aeronave" id="idaeronave">
 <optgroup label="Minhas aeronaves">
 <%
 		ArrayList<AeronavePersonalizada> aeronaves_usuario = (ArrayList<AeronavePersonalizada>) request.getSession().getAttribute("listaAeronavesUsuario");
@@ -79,7 +81,7 @@ try{
 } %>
 </optgroup>
 </select><br>
-<input type="submit" value="Gerar Navegação">
+<input type="submit" value="Gerar Navegação" formaction="servletCalculaNavegacao" formmethod="post">
 </form>
 <div id="resultado">
 <% if(!request.getSession().getAttribute("navegacao").equals("")){
@@ -105,7 +107,7 @@ try{
 				+"</td><td>" +
 				String.format("%03d",trechos.get(i).getRumo()) + "°"
 				+"</td><td>" + 
-				distancia + "nm"
+				String.format("%.1d",distancia) + "nm"
 				+ "</td><td>" + 
 				String.format("%02d",(tempo/60)) + ":" + String.format("%02d",(tempo%60))
 				+ "</td><td>" +
@@ -113,12 +115,18 @@ try{
 				+ "</td></tr>");
 	}
 	out.print("<tr><td></td><td></td><td style=\"align: right; padding: 10px;\">Total:</td><td>" + 
-			distanciatotal 
+			String.format("%.1d",distanciatotal) 
 			+ "</td><td>" + 
 			String.format("%02d",(tempototal/60)) + ":" + String.format("%02d",(tempototal%60)) 
 			+ "</td><td>" + 
 			consumototal + "l"
 			+ "</td></tr></table>");
+	out.print("<div>");
+	out.print("<form>");
+	out.print("<input type=\"submit\" value=\"Gerar Kneeboard\" formaction=\"servletKneeboard\" formmethod=\"post\">");
+	out.print("<input type=\"submit\" value=\"Salvar Navegação\" formaction=\"servletSalvarNavegacao\" formmethod=\"post\">");
+	out.print("</form>");
+	out.print("</div>");
 }%>
 </div>
  <script src="./js/rota.js"></script>

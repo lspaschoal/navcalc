@@ -11,9 +11,9 @@ public abstract class Coordenada {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	@Column(name="latitude", nullable = false)
+	@Column(name = "latitude", nullable = false)
 	private double latitude;
-	@Column(name="longitude", nullable = false)
+	@Column(name = "longitude", nullable = false)
 	private double longitude;
 
 	// Define a latitude a partir de um double representando os graus
@@ -68,6 +68,13 @@ public abstract class Coordenada {
 		}
 	}
 
+	// Setter para o ID
+	public void setId(long id) {
+		if (id > 0) {
+			this.id = id;
+		}
+	}
+
 	// Retorna a latitude convertida para uma string no formato ##°##'##"(N/S)
 	public String latitudeToString() {
 		double lat = this.latitude;
@@ -105,11 +112,11 @@ public abstract class Coordenada {
 	public double getLatitude() {
 		return this.latitude;
 	}
-	
+
 	public double getLongitude() {
 		return this.longitude;
 	}
-	
+
 	// Retorna a latitude convvertida para radianos (usado nos cálculos de distância
 	// e rumo)
 	public double getLatitudeRadianos() {
@@ -151,15 +158,14 @@ public abstract class Coordenada {
 				- (Math.sin(latitudeO) * Math.cos(longitudeD - longitudeO))));
 		azimute = azimute * 57.2957795131; // 180/PI -> convertendo de radianos para graus
 		int rumo = (int) Math.round(azimute);
-		if(latitudeD < latitudeO) {
-			//Deslocamento para o sul: rumo = azimute + 180
+		if (latitudeD < latitudeO) {
+			// Deslocamento para o sul: rumo = azimute + 180
 			rumo += 180;
-		}else if(longitudeD < longitudeO) {
-			//Deslocamento para o norte: quando no sentido oeste, rumo = azimute + 360
+		} else if (longitudeD < longitudeO) {
+			// Deslocamento para o norte: quando no sentido oeste, rumo = azimute + 360
 			rumo += 360;
 		}
 		return rumo;
 	}
-	
 
 }

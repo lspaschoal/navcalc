@@ -40,10 +40,9 @@ public class ServletCalculaNavegacao extends HttpServlet {
 			Aerodromo origem = new Aerodromo().getAerodromo(origem_digitada);
 			if (origem != null) {
 				plan.setOrigem(origem);
-				request.setAttribute("erroOrigem", "");
 			} else {
 				planejamento_valido = false;
-				request.setAttribute("erroOrigem", "Aeródromo de origem inválido.");
+				request.getSession().setAttribute("erroOrigem", "Aeródromo de origem inválido.");
 			}
 
 			// Lendo o destino
@@ -52,10 +51,9 @@ public class ServletCalculaNavegacao extends HttpServlet {
 			Aerodromo destino = new Aerodromo().getAerodromo(destino_digitado);
 			if (destino != null) {
 				plan.setDestino(destino);
-				request.setAttribute("erroDestino", "");
 			} else {
 				planejamento_valido = false;
-				request.setAttribute("erroDestino", "Aeródromo de destino inválido.");
+				request.getSession().setAttribute("erroDestino", "Aeródromo de destino inválido.");
 			}
 
 			// Lendo os fixos da rota
@@ -63,12 +61,13 @@ public class ServletCalculaNavegacao extends HttpServlet {
 			ModelFixo mf = new ModelFixo();
 			Fixo f;
 			ArrayList<Fixo> busca = new ArrayList<Fixo>();
-			for (int i = 1; i < 11; i++) {
+			int nfixos = Integer.parseInt(request.getSession().getAttribute("nfixos").toString());
+			for (int i = 0; i < nfixos; i++) {
 				String coordenada = request.getParameter("fixo" + i).toUpperCase();
 				request.setAttribute("coordenada_digitada" + i, coordenada);
 				if (coordenada != null && !coordenada.equals("")) {
 					f = null;
-					busca = mf.getFixo(coordenada);
+					busca = mf.listaFixos(coordenada);
 					if (busca.size() > 0) {
 						f = busca.get(0);
 						rota.add(f);
@@ -91,19 +90,16 @@ public class ServletCalculaNavegacao extends HttpServlet {
 						}
 						if (f == null) {
 							planejamento_valido = false;
-							request.setAttribute("erroFixo" + i, "Coordenada inválida");
-						} else {
-							request.setAttribute("erroFixo" + i, "");
+							request.getSession().setAttribute("erroFixo" + i, "Coordenada inválida");
 						}
 					}
-				} else {
-					request.setAttribute("erroFixo" + i, "");
-				}
+				} 
 			}
 			plan.setRota(rota);
 
 			// Lendo a altitude
 			plan.setAltitude(Integer.parseInt(request.getParameter("altitude")));
+			request.setAttribute("altitude_escolhida", request.getParameter("altitude"));
 
 			// Lendo a aeronave
 			Aeronave acft = null;

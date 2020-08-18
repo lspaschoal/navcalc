@@ -39,39 +39,15 @@ public class ServletNavegacao extends HttpServlet {
 			ArrayList<Aeronave> listaAeronavesPadrao = new ArrayList<Aeronave>();
 			listaAeronavesPadrao = ma.listaAeronaves();
 			request.getSession().setAttribute("listaAeronavesPadrao", listaAeronavesPadrao);
-
-			// Definindo os campos como vazios
-			request.setAttribute("origem_digitada", "");
-			request.setAttribute("destino_digitado", "");
-			request.setAttribute("coordenada_digitada1", "");
-			request.setAttribute("coordenada_digitada2", "");
-			request.setAttribute("coordenada_digitada3", "");
-			request.setAttribute("coordenada_digitada4", "");
-			request.setAttribute("coordenada_digitada5", "");
-			request.setAttribute("coordenada_digitada6", "");
-			request.setAttribute("coordenada_digitada7", "");
-			request.setAttribute("coordenada_digitada8", "");
-			request.setAttribute("coordenada_digitada9", "");
-			request.setAttribute("coordenada_digitada10", "");
-			// Definindo as mensagens de erro como vazias
-			request.setAttribute("erroOrigem", "");
-			request.setAttribute("erroDestino", "");
-			request.setAttribute("erroFixo1", "");
-			request.setAttribute("erroFixo2", "");
-			request.setAttribute("erroFixo3", "");
-			request.setAttribute("erroFixo4", "");
-			request.setAttribute("erroFixo5", "");
-			request.setAttribute("erroFixo6", "");
-			request.setAttribute("erroFixo7", "");
-			request.setAttribute("erroFixo8", "");
-			request.setAttribute("erroFixo9", "");
-			request.setAttribute("erroFixo10", "");
+			
+			// Iniciando o número de campos para fixos como 5
+			request.getSession().setAttribute("nfixos", "5");
 
 			// Definindo a navegação como vazia
 			request.getSession().setAttribute("navegacao", "");
 
 			// Direcionando para o jsp de planejamento
-			request.getRequestDispatcher("planejamento.jsp").forward(request, response);
+			request.getRequestDispatcher("planejamento2.jsp").forward(request, response);
 		} catch (NullPointerException npe) {
 			request.setAttribute("msgErro", "É necessário estar logado para acessar o sistema.");
 			request.getRequestDispatcher("login.jsp").forward(request, response);

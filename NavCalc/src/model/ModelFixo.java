@@ -38,17 +38,46 @@ public class ModelFixo {
 		}
 	}
 	
-	public ArrayList<Fixo> getFixo(String nome_fixo) {
+	public Fixo getFixo(long id) {
+		Fixo fixo = null;
+		try {
+			abrirConn();
+			if (conn != null && !conn.isClosed()) {
+				String sql = "SELECT nome,latitude,longitude FROM fixos where id=?;";
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				stmt.setLong(1, id);
+				ResultSet rs = stmt.executeQuery();
+				if (rs.next()) {
+					fixo = new Fixo();
+					fixo.setId(id);
+					fixo.setNome(rs.getString(1));
+					fixo.setLatitude(rs.getDouble(2));
+					fixo.setLongitude(rs.getDouble(3));
+				}
+			}
+		} catch (SQLException e) {
+			msgErro = "Erro de SQL: " + e.toString();
+		}
+		fecharConn();
+		return fixo;
+	}
+	
+	public ArrayList<Fixo> listaFixos(String nome_fixo) {
 		ArrayList<Fixo> lista = new ArrayList<Fixo>();
 		try {
 			abrirConn();
 			if (conn != null && !conn.isClosed()) {
-				String sql = "SELECT nome,latitude,longitude FROM fixos where nome=?;";
+				String sql = "SELECT id,nome,latitude,longitude FROM fixos where nome=?;";
 				PreparedStatement stmt = conn.prepareStatement(sql);
 				stmt.setString(1, nome_fixo);
 				ResultSet rs = stmt.executeQuery();
 				while (rs.next()) {
-					lista.add(new Fixo(rs.getString(1),rs.getDouble(2),rs.getDouble(3)));
+					Fixo fixo = new Fixo();
+					fixo.setId(rs.getLong(1));
+					fixo.setNome(rs.getString(2));
+					fixo.setLatitude(rs.getDouble(3));
+					fixo.setLongitude(rs.getDouble(4));
+					lista.add(fixo);
 				}
 			}
 		} catch (SQLException e) {
