@@ -47,7 +47,7 @@ public class ServletNavegacao extends HttpServlet {
 			request.getSession().setAttribute("navegacao", "");
 
 			// Direcionando para o jsp de planejamento
-			request.getRequestDispatcher("planejamento2.jsp").forward(request, response);
+			request.getRequestDispatcher("planejamento.jsp").forward(request, response);
 		} catch (NullPointerException npe) {
 			request.setAttribute("msgErro", "É necessário estar logado para acessar o sistema.");
 			request.getRequestDispatcher("login.jsp").forward(request, response);

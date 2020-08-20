@@ -1,0 +1,46 @@
+.linha-par {
+    background: #d2d2d2;
+}
+
+th,
+td {
+    padding: 7px;
+    font-family: sans-serif;
+}
+
+td {
+    border-top: 1px solid;
+}
+
+th {
+    background: #40c6ff;
+    font-weight: bolder;
+    font-size: large;
+}
+
+.nome,
+.rumo,
+.tempo {
+    text-align: center;
+    font-size: large;
+}
+
+.distancia,
+.consumo {
+    text-align: right;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.rumo,
+.distancia,
+.tempo {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.total {
+    font-weight: 900;
+    font-size: 20px;
+}

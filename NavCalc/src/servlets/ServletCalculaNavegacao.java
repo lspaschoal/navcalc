@@ -40,6 +40,7 @@ public class ServletCalculaNavegacao extends HttpServlet {
 			Aerodromo origem = new Aerodromo().getAerodromo(origem_digitada);
 			if (origem != null) {
 				plan.setOrigem(origem);
+				request.getSession().setAttribute("erroOrigem", "");
 			} else {
 				planejamento_valido = false;
 				request.getSession().setAttribute("erroOrigem", "Aeródromo de origem inválido.");
@@ -51,6 +52,7 @@ public class ServletCalculaNavegacao extends HttpServlet {
 			Aerodromo destino = new Aerodromo().getAerodromo(destino_digitado);
 			if (destino != null) {
 				plan.setDestino(destino);
+				request.getSession().setAttribute("erroDestino", "");
 			} else {
 				planejamento_valido = false;
 				request.getSession().setAttribute("erroDestino", "Aeródromo de destino inválido.");
@@ -71,7 +73,7 @@ public class ServletCalculaNavegacao extends HttpServlet {
 					if (busca.size() > 0) {
 						f = busca.get(0);
 						rota.add(f);
-						request.setAttribute("erroFixo" + i, "");
+						request.getSession().setAttribute("erroFixo" + i, "");
 					} else {
 						try {
 							int latgraus = Integer.parseInt(coordenada.substring(0, 2));
@@ -86,16 +88,20 @@ public class ServletCalculaNavegacao extends HttpServlet {
 									lonhemisferio);
 							rota.add(f);
 						} catch (NumberFormatException nfe) {
-
+							request.getSession().setAttribute("erroFixo" + i, "Coordenada inválida");
 						}
 						if (f == null) {
 							planejamento_valido = false;
 							request.getSession().setAttribute("erroFixo" + i, "Coordenada inválida");
+						}else {
+							request.getSession().setAttribute("erroFixo" + i, "");
 						}
 					}
 				} 
 			}
-			plan.setRota(rota);
+			if(planejamento_valido) {
+				plan.setRota(rota);
+			}
 
 			// Lendo a altitude
 			plan.setAltitude(Integer.parseInt(request.getParameter("altitude")));
