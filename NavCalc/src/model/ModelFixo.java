@@ -62,6 +62,26 @@ public class ModelFixo {
 		return fixo;
 	}
 	
+	public Long getId(String nome_fixo) {
+		Long id = 0L;
+		try {
+			abrirConn();
+			if (conn != null && !conn.isClosed()) {
+				String sql = "SELECT id FROM fixos where nome=?;";
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				stmt.setString(1, nome_fixo);
+				ResultSet rs = stmt.executeQuery();
+				if (rs.next()) {
+					id = rs.getLong(1);
+				}
+			}
+		} catch (SQLException e) {
+			msgErro = "Erro de SQL: " + e.toString();
+		}
+		fecharConn();
+		return id;
+	}
+	
 	public ArrayList<Fixo> listaFixos(String nome_fixo) {
 		ArrayList<Fixo> lista = new ArrayList<Fixo>();
 		try {

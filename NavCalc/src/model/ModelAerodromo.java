@@ -5,9 +5,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
-import javax.persistence.Query;
-import org.hibernate.Session;
 import controller.Aerodromo;
 
 public class ModelAerodromo {
@@ -70,9 +67,48 @@ public class ModelAerodromo {
 		return ad;
 	}
 	
+	public Long getId(String icao) {
+		Long id = 0L;
+		try {
+			abrirConn();
+			if (conn != null && !conn.isClosed()) {
+				String sql = "SELECT id FROM aerodromos WHERE icao=?;";
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				stmt.setString(1, icao.toUpperCase());
+				ResultSet rs = stmt.executeQuery();
+				if (rs.next()) {
+					id = rs.getLong(1);
+				}
+			}
+		} catch (SQLException e) {
+			msgErro = "Erro de SQL: " + e.toString();
+		}
+		fecharConn();
+		return id;
+	}
+	
 	public Aerodromo getAerodromo(long id) {
 		Aerodromo ad = null;
-		
+		try {
+			abrirConn();
+			if (conn != null && !conn.isClosed()) {
+				String sql = "SELECT icao,latitude,longitude,elevacao,nome FROM aerodromos WHERE id=?;";
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				stmt.setLong(1, id);
+				ResultSet rs = stmt.executeQuery();
+				if (rs.next()) {
+					ad = new Aerodromo();
+					ad.setIcao(rs.getString(1));
+					ad.setLatitude(rs.getDouble(2));
+					ad.setLongitude(rs.getDouble(3));
+					ad.setElevacao(rs.getInt(4));
+					ad.setNome(rs.getString(6));
+				}
+			}
+		} catch (SQLException e) {
+			msgErro = "Erro de SQL: " + e.toString();
+		}
+		fecharConn();
 		return ad;
 	}
 	

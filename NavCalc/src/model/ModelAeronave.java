@@ -42,7 +42,7 @@ public class ModelAeronave {
 		try {
 			abrirConn();
 			if (conn != null && !conn.isClosed()) {
-				String sql = "INSERT INTO aeronaves_padrao (tipo,velocidadeCruzeiro,velocidadeSubida,velocidadeDescida,razaoSubida,razaoDescida,consumo) values (?,?,?,?,?,?,?,?);";
+				String sql = "INSERT INTO aeronaves_padrao (tipo,velocidadeCruzeiro,velocidadeSubida,velocidadeDescida,razaoSubida,razaoDescida,consumo) values (?,?,?,?,?,?,?);";
 				PreparedStatement stmt = conn.prepareStatement(sql);
 				stmt.setString(1, a.getTipo());
 				stmt.setInt(2, a.getVelocidadeCruzeiro());
@@ -124,6 +124,34 @@ public class ModelAeronave {
 		return acft;
 	}
 	
+	public Aeronave getAeronave(long id_aeronave) {
+		Aeronave acft = null;
+		try {
+			abrirConn();
+			if (conn != null && !conn.isClosed()) {
+				String sql = "SELECT tipo,velocidadeCruzeiro,velocidadeSubida,velocidadeDescida,razaoSubida,razaoDescida,consumo,id FROM aeronaves_padrao WHERE id=?;";
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				stmt.setLong(1, id_aeronave);
+				ResultSet rs = stmt.executeQuery();
+				if (rs.next()) {
+					acft = new Aeronave();
+					acft.setTipo(rs.getString(1));
+					acft.setVelocidadeCruzeiro(rs.getInt(2));
+					acft.setVelocidadeSubida(rs.getInt(3));
+					acft.setVelocidadeDescida(rs.getInt(4));
+					acft.setRazaoSubida(rs.getInt(5));
+					acft.setRazaoDescida(rs.getInt(6));
+					acft.setConsumo(rs.getInt(7));
+					acft.setId(rs.getLong(8));
+				}
+			}
+		} catch (SQLException e) {
+			msgErro = "Erro de SQL: " + e.toString();
+		}
+		fecharConn();
+		return acft;
+	}
+	
 	
 	public boolean excluirAeronave(long idAeronave) {
 		boolean sucesso = false;
@@ -146,4 +174,5 @@ public class ModelAeronave {
 	public String getMsgErro() {
 		return msgErro;
 	}
+
 }

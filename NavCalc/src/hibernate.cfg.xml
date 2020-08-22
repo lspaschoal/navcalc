@@ -16,5 +16,6 @@
   <mapping class="controller.AeronavePersonalizada"/>
   <mapping class="controller.Fixo"/>
   <mapping class="controller.Usuario"/>
+  <mapping class="controller.PlanejamentoSalvo"/>
  </session-factory>
 </hibernate-configuration>

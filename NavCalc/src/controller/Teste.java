@@ -56,6 +56,13 @@ public class Teste {
 //			System.out.println("Erro: " + e.toString());
 //		}
 		
+		Fixo f = new Fixo();
+		f.setLatitude(-10.5);
+		f.setLongitude(20.3);
+
+		System.out.println(f.latitudeToString().replace("°", "").replace("'", "").replace("\"", ""));
+		System.out.println(f.longitudeToString().replace("°", "").replace("'", "").replace("\"", ""));
+		
 	}
 
 }

@@ -116,6 +116,8 @@ public class ServletCalculaNavegacao extends HttpServlet {
 
 			}
 			if (indiceAeronave > 0L) {
+				request.getSession().setAttribute("aeronave_personalizada", "true");
+				request.getSession().setAttribute("id_aeronave", indiceAeronave);
 				AeronavePersonalizada ap = new AeronavePersonalizada();
 				ModelAeronavePersonalizada map = new ModelAeronavePersonalizada();
 				ap = map.getAeronave(indiceAeronave);
@@ -128,8 +130,10 @@ public class ServletCalculaNavegacao extends HttpServlet {
 				acft.setRazaoDescida(ap.getRazaoDescida());
 				acft.setConsumo(ap.getConsumo());
 			} else {
+				request.getSession().setAttribute("aeronave_personalizada", "false");
 				ModelAeronave ma = new ModelAeronave();
 				acft = ma.getAeronave(request.getParameter("aeronave"));
+				request.getSession().setAttribute("id_aeronave", acft.getId());
 			}
 			if (acft != null) {
 				plan.setAeronave(acft);

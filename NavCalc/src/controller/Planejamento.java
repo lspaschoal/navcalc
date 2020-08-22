@@ -5,11 +5,11 @@ import java.util.ArrayList;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SelectBeforeUpdate;
-
 
 public class Planejamento {
 	
@@ -111,6 +111,10 @@ public class Planejamento {
 
 	public ArrayList<Trecho> getTrechos() {
 		return trechos;
+	}
+	
+	public ArrayList<Fixo> getRota() {
+		return this.rota;
 	}
 
 	public void setRota(ArrayList<Fixo> rota) {

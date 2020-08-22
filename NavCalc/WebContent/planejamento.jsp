@@ -160,10 +160,13 @@ for(int i = 0; i < nfixos; i++){
 	out.println("<div>");
 	out.println("<form>");
 	out.println("<input type=\"submit\" value=\"Gerar Kneeboard\" formaction=\"servletKneeboard\" formmethod=\"post\">");
-	out.println("<input type=\"submit\" value=\"Salvar Navegação\" formaction=\"servletSalvarNavegacao\" formmethod=\"post\">");
+	out.println("<input type=\"submit\" value=\"Salvar Navegação\" formaction=\"servletSalvarPlanejamento\" formmethod=\"post\">");
 	out.println("</form>");
 	out.println("</div>");
 	out.println("</div>");
+	if(request.getAttribute("salvo") != null){
+		out.println(request.getAttribute("salvo"));
+	}
 }%>
  <script src="./js/rota.js"></script>
  <script src="./js/mostraAltitude.js"></script>
