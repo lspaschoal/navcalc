@@ -18,9 +18,8 @@ import model.ModelAeronavePersonalizada;
 import model.ModelFixo;
 import model.ModelPlanejamentoSalvo;
 
-@WebServlet("/servletSalvarPlanejamento") // mapeamento do servlet
-public class ServletSalvarPlanejamento extends HttpServlet {
-
+@WebServlet("/servletEditaPlanoSalvo") // mapeamento do servlet
+public class ServletEditaPlanoSalvo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -30,43 +29,16 @@ public class ServletSalvarPlanejamento extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		long id_planejamento_salvo = 0;
-		try {
-			id_planejamento_salvo = Long.parseLong(request.getParameter("id_planejamento_salvo").toString());
-		} catch (Exception e) {
 
-		}
+		// lendo o id do planejamento a ser editado
+		long id_planejamento = Long.parseLong(request.getParameter("idPlano"));
 
-		PlanejamentoSalvo ps = new PlanejamentoSalvo();
-		if (id_planejamento_salvo > 0) {
-			ps.setId(id_planejamento_salvo);
-		}
-		ps.setIdUsuario(Long.parseLong(request.getSession().getAttribute("id").toString()));
-		ps.setAeronave_personalizada(
-				request.getSession().getAttribute("aeronave_personalizada").toString().equals("true"));
-		ps.setId_aeronave((Long) request.getSession().getAttribute("id_aeronave"));
-		Planejamento planejamento = (Planejamento) request.getSession().getAttribute("navegacao");
-		if (id_planejamento_salvo > 0) {
-			// atualizando um planejamento já existente no banco de dados
-			ps.setId(id_planejamento_salvo);
-			if (ps.atualizar(planejamento)) {
-				request.setAttribute("salvo", "Planejamento atualizado com sucesso!");
-			} else {
-				request.setAttribute("salvo", ps.getMsgErro());
-			}
-		} else {
-			// salvando um planejamento novo no banco de dados <p class=\"display-success\">
-			if (ps.salvar(planejamento)) {
-				request.setAttribute("salvo", "<p class=\"display-success\">Planejamento salvo com sucesso!</p>");
-			} else {
-				request.setAttribute("salvo", "<p class=\"display-error\">" + ps.getMsgErro() + "</p>");
-			}
-		}
-
-		/////////////////////////////////////////////////////////////////////////////////////////////
+		// recuperando do banco de dados
+		ModelPlanejamentoSalvo mps = new ModelPlanejamentoSalvo();
+		PlanejamentoSalvo ps = mps.getPlanejamento(id_planejamento);
 
 		// gravando os atributos no request para serem lidos pela página de edição
-		request.setAttribute("id_planejamento", id_planejamento_salvo);
+		request.setAttribute("id_planejamento", id_planejamento);
 		Planejamento p = ps.gerarPlanejamento();
 		request.setAttribute("origem_digitada", p.getOrigem().getIcao());
 		request.setAttribute("destino_digitado", p.getDestino().getIcao());
@@ -113,7 +85,8 @@ public class ServletSalvarPlanejamento extends HttpServlet {
 		ArrayList<Aeronave> listaAeronavesPadrao = new ArrayList<Aeronave>();
 		listaAeronavesPadrao = ma.listaAeronaves();
 		request.getSession().setAttribute("listaAeronavesPadrao", listaAeronavesPadrao);
+
+		// redirecionando para a página de planejamento
 		request.getRequestDispatcher("planejamento.jsp").forward(request, response);
 	}
-
 }

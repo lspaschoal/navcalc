@@ -134,6 +134,7 @@ public class ServletCalculaNavegacao extends HttpServlet {
 				ModelAeronave ma = new ModelAeronave();
 				acft = ma.getAeronave(request.getParameter("aeronave"));
 				request.getSession().setAttribute("id_aeronave", acft.getId());
+				request.getSession().setAttribute("tipo_acft",acft.getTipo());
 			}
 			if (acft != null) {
 				plan.setAeronave(acft);
@@ -144,6 +145,8 @@ public class ServletCalculaNavegacao extends HttpServlet {
 				plan.calcular();
 				request.getSession().setAttribute("navegacao", plan);
 			}
+			
+			request.setAttribute("id_planejamento", request.getParameter("id_planejamento"));
 
 			request.getRequestDispatcher("planejamento.jsp").forward(request, response);
 		} catch (NullPointerException npe) {

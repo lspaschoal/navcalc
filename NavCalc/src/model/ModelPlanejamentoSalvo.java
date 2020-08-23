@@ -69,6 +69,38 @@ public class ModelPlanejamentoSalvo {
 		return false;
 	}
 	
+	public boolean atualizar(PlanejamentoSalvo ps) {
+		try {
+			abrirConn();
+			if (conn != null && !conn.isClosed()) {
+				String sql = "UPDATE planejamentos_salvos SET id_usuario=?,id_origem=?,id_destino=?,aeronave_personalizada=?,id_aeronave=?,altitude=?,dmg=?,rota=? WHERE id=?;";
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				stmt.setLong(1, ps.getIdUsuario());
+				stmt.setLong(2, ps.getId_origem());
+				stmt.setLong(3, ps.getId_destino());
+				stmt.setBoolean(4, ps.isAeronave_personalizada());
+				stmt.setLong(5, ps.getId_aeronave());
+				stmt.setInt(6, ps.getAltitude());
+				stmt.setInt(7, ps.getDmg());
+				stmt.setString(8,ps.getRota());
+				stmt.setLong(9, ps.getId());
+				if (stmt.executeUpdate() == 1) {
+					msgErro = "";
+					fecharConn();
+					return true;
+				} else {
+					msgErro = "Erro: Ocorreu um erro durante o cadastro. Por favor, tente novamente.";
+				}
+			} else {
+				msgErro = "Erro: Falha na conexão com o banco de dados.";
+			}
+		} catch (SQLException e) {
+			msgErro = "Erro de SQL: " + e.toString();
+		}
+		fecharConn();
+		return false;
+	}
+	
 	public PlanejamentoSalvo getPlanejamento(long id){
 		PlanejamentoSalvo ps = null;
 		try {
@@ -126,6 +158,24 @@ public class ModelPlanejamentoSalvo {
 		}
 		fecharConn();
 		return lista_planos;
+	}
+	
+	public boolean excluir(long id_planejamento) {
+		boolean sucesso = false;
+		try {
+			abrirConn();
+			if (conn != null && !conn.isClosed()) {
+				String sql = "DELETE FROM planejamentos_salvos WHERE id=?;";
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				stmt.setLong(1, id_planejamento);
+				stmt.executeQuery();
+				sucesso = true;
+			}
+		} catch (SQLException e) {
+			msgErro = "Erro de SQL: " + e.toString();
+		}
+		fecharConn();
+		return sucesso;
 	}
 
 	public String getMsgErro() {

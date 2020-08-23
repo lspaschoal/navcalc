@@ -8,10 +8,6 @@ td {
     font-family: sans-serif;
 }
 
-td {
-    border-top: 1px solid;
-}
-
 th {
     background: #40c6ff;
     font-weight: bolder;

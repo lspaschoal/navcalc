@@ -19,7 +19,7 @@
 	<div class="topnav">
 		<a class="active" href="painel.jsp">Painel Principal</a>
 		<form name="navegacao" action="servletNavegacao" method="post"><a href="javascript:navegacao.submit()">Planejamento</a></form> 
-		<form name="planejamentos_salvos" action="servletPlanejamentosSalvos" method="post"><a href="javascript:navegacao.submit()">Rotas Salvas</a> </form> 
+		<a href="rotas_salvas.jsp">Rotas Salvas</a>
 		<form name="gerencia_aeronaves" action="servletGerenciaAeronaves" method="post"><a href="javascript:navegacao.submit()">Aeronaves</a> </form> 
 		<form name="logoff" action="servletLogoff" method="post"><label class="logoff" onclick="javascript:logoff.submit()">Logoff</label></form>
 		<label class="usuario"><%=request.getSession().getAttribute("email")%></label>
@@ -34,10 +34,10 @@
 			</form>
 		</div>
 		<div class="card">
-			<form action="servletPlanejamentosSalvos" method="post">
+			<a href="rotas_salvas.jsp">
 				<input type="image" class="icone_painel" src="images/icons/salvos.png" alt="Submit">
-				<h4>Rotas Salvas</h4>
-			</form>
+			</a>
+			<h4>Rotas Salvas</h4>
 		</div>
 		<div class="card">
 			<form action="servletGerenciaAeronaves" method="post">

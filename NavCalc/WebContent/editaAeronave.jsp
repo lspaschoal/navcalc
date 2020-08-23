@@ -19,7 +19,7 @@
 <div class="topnav">
 		<a class="active" href="painel.jsp">Painel Principal</a>
 		<form name="navegacao" action="servletNavegacao" method="post"><a href="javascript:navegacao.submit()">Planejamento</a></form> 
-		<form name="planejamentos_salvos" action="servletPlanejamentosSalvos" method="post"><a href="javascript:navegacao.submit()">Rotas Salvas</a> </form> 
+		<a href="rotas_salvas.jsp">Rotas Salvas</a> 
 		<form name="gerencia_aeronaves" action="servletGerenciaAeronaves" method="post"><a class="active" href="javascript:navegacao.submit()">Aeronaves</a> </form> 
 		<form name="logoff" action="servletLogoff" method="post"><label class="logoff" onclick="javascript:navegacao.submit()">Logoff</label></form>
 </div>

@@ -29,11 +29,11 @@
 	<div class="topnav">
 		<a href="painel.jsp">Painel Principal</a>
 		<form name="navegacao" action="servletNavegacao" method="post"><a href="javascript:navegacao.submit()">Planejamento</a></form> 
-		<form name="planejamentos_salvos" action="servletPlanejamentosSalvos" method="post"><a class="active" href="javascript:navegacao.submit()">Rotas Salvas</a> </form> 
+		<a href="rotas_salvas.jsp">Rotas Salvas</a> 
 		<form name="gerencia_aeronaves" action="servletGerenciaAeronaves" method="post"><a href="javascript:navegacao.submit()">Aeronaves</a> </form> 
 		<form name="logoff" action="servletLogoff" method="post"><label class="logoff" onclick="javascript:logoff.submit()">Logoff</label></form>
 		<label class="usuario"><%=request.getSession().getAttribute("email")%></label>
-</div>
+	</div>
 
 	<div class="container">
 	<%
@@ -43,7 +43,8 @@
 	%>
 	<%
 		if (planejamentos.isEmpty()) {
-		out.println("Você ainda não tem planejamentos salvos.");
+		out.println("<h2>Você ainda não tem planejamentos salvos.</h2>");
+		out.println("<img src=\"images/aviao_triste.jpg\" style=\"margin-left: 352px;\" alt=\"desenho de um avião triste\">");
 	} else {
 		out.println(
 		"<table><tr><th>Origem"
@@ -59,15 +60,19 @@
 			out.print("<tr><td>" +  plan.getOrigem().getIcao() //origem
 						+ "</td><td>" + plan.getDestino().getIcao() //destino
 						+ "</td><td>");
-			
-			for(Fixo f : plan.getRota()){ //rota
-				if(f.getNome() != null){
-					out.print(f.getNome());
-				}else{
-					out.print(f.latitudeToString()+"/"+f.longitudeToString());
-				}
-				if(plan.getRota().indexOf(f) < plan.getRota().size()-1){ 
-					out.print(" , ");
+			//rota
+			if(plan.getRota().isEmpty()){
+				out.print("DCT");
+			}else{
+				for(Fixo f : plan.getRota()){
+					if(f.getNome() != null){
+						out.print(f.getNome());
+					}else{
+						out.print(f.latitudeToString()+"/"+f.longitudeToString());
+					}
+					if(plan.getRota().indexOf(f) < plan.getRota().size()-1){ 
+						out.print(" , ");
+					}
 				}
 			}
 			out.println("</td><td>" + ps.getAltitude() //altitude
@@ -76,8 +81,8 @@
 							String prefixo = new ModelAeronavePersonalizada().getAeronave(ps.getId_aeronave()).getPrefixo();
 							out.print(" (" + prefixo + ")");
 						}
-			out.println("</td><td><form action=\"servletEditaPlanoSalvo\" method=\"post\"><input name=\"idAeronave\" type=\"hidden\" value=\"" + ps.getId() + "\"><input type=\"image\" class=\"ico_editar_excluir\" src=\"images/icons/editar.png\" alt=\"submit\"></form>" //botão editar
-						+ "</td><td><form action=\"servletExcluiPlanoSalvo\" method=\"post\" onsubmit=\"return confirm('Tem certeza de que deseja excluir esse planejamento?')\"><input name=\"idAeronave\" type=\"hidden\" value=\"" + ps.getId() + "\"><input type=\"image\" class=\"ico_editar_excluir\" src=\"images/icons/excluir.png\" alt=\"submit\"></form>" //botão excluir
+			out.println("</td><td><form action=\"servletEditaPlanoSalvo\" method=\"post\"><input name=\"idPlano\" type=\"hidden\" value=\"" + ps.getId() + "\"><input type=\"image\" class=\"ico_editar_excluir\" src=\"images/icons/editar.png\" alt=\"submit\"></form>" //botão editar
+						+ "</td><td><form action=\"servletExcluiPlanoSalvo\" method=\"post\" onsubmit=\"return confirm('Tem certeza de que deseja excluir esse planejamento?')\"><input name=\"idPlano\" type=\"hidden\" value=\"" + ps.getId() + "\"><input type=\"image\" class=\"ico_editar_excluir\" src=\"images/icons/excluir.png\" alt=\"submit\"></form>" //botão excluir
 						+ "</td></tr>");
 		}
 		out.println("</table>");

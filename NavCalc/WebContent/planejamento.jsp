@@ -27,7 +27,7 @@ try{
 	<div class="topnav">
 		<a href="painel.jsp">Painel Principal</a>
   		<form name="navegacao" action="servletNavegacao" method="post"><a class="active" href="javascript:navegacao.submit()">Planejamento</a></form> 
-		<form name="planejamentos_salvos" action="servletPlanejamentosSalvos" method="post"><a href="javascript:navegacao.submit()">Rotas Salvas</a> </form> 
+		<a href="rotas_salvas.jsp">Rotas Salvas</a>
 		<form name="gerencia_aeronaves" action="servletGerenciaAeronaves" method="post"><a href="javascript:navegacao.submit()">Aeronaves</a> </form> 
 		<form name="logoff" action="servletLogoff" method="post"><label class="logoff" onclick="javascript:logoff.submit()">Logoff</label></form>
 		<label class="usuario"><%= request.getSession().getAttribute("email").toString() %></label>
@@ -38,28 +38,29 @@ try{
 <table>
 <!-- Linha para input de origem -->
 <tr>
-<td style="text-align: right;"><label for="idorigem">Aeródromo de origem: </label></td><td style="text-align: left;"><input type="text" placeholder="código ICAO" name="origem" id="idorigem" value="<% if(request.getAttribute("origem_digitada") != null) out.print(request.getAttribute("origem_digitada")); %>"></td>
+<td style="text-align: right; border-style: none;"><label for="idorigem">Aeródromo de origem: </label></td><td style="text-align: left; border-style: none;"><input type="text" placeholder="código ICAO" name="origem" id="idorigem" value="<% if(request.getAttribute("origem_digitada") != null) out.print(request.getAttribute("origem_digitada")); %>"></td>
 </tr>
 <tr>
-<td></td><td style="text-align: left;"><label style="color: #990000; font-size: 13px;"><% if(request.getSession().getAttribute("erroOrigem") != null) out.print(request.getSession().getAttribute("erroOrigem")); %></label></td>
+<td style="border-style: none;"></td><td style="text-align: left; border-style: none;"><label style="color: #990000; font-size: 13px;"><% if(request.getSession().getAttribute("erroOrigem") != null) out.print(request.getSession().getAttribute("erroOrigem")); %></label></td>
 </tr>
 <!-- Linhas para inputs de fixos  -->
+<tr><td colspan="2" style="text-align: center;">Rota<br>Digite o nome do fixo, ou a coodenada no formato 000000(N/S)0000000(W/E)</td></tr>
 <%
 int nfixos = Integer.parseInt(request.getSession().getAttribute("nfixos").toString());
 for(int i = 0; i < nfixos; i++){
 	out.println(
 			  "<tr>"
-			+ "<td style=\"text-align: right;\">"
+			+ "<td style=\"text-align: right; border-style: none;\">"
 			+ "<label>Fixo " + ((i < 9) ? "0" : "") + (i+1) + "</label></td>"
-			+ "<td style=\"text-align: left;\"><input type=\"text\" id=\"idfixo" + i + "\" name=\"fixo" + i + "\" placeholder=\"nome ou coordenada\" value=\""
+			+ "<td style=\"text-align: left; border-style: none;\"><input type=\"text\" id=\"idfixo" + i + "\" name=\"fixo" + i + "\" placeholder=\"nome ou coordenada\" value=\""
 			+ ((request.getAttribute("coordenada_digitada" + i) != null) ? request.getAttribute("coordenada_digitada" + i) : "")
 			+ "\"></td>"
 			+ "</tr>"
 			);
 	out.println(
 			  "<tr>"
-			+ "<td></td>"
-			+ "<td style=\"text-align: left;\"><label style=\"color: #990000; font-size: 13px;\" name=\"erroFixo" + i + "\">"
+			+ "<td style=\"border-style: none;\"></td>"
+			+ "<td style=\"text-align: left; border-style: none;\"><label style=\"color: #990000; font-size: 13px;\" name=\"erroFixo" + i + "\">"
 			+ ((request.getSession().getAttribute("erroFixo" + i) != null) ? request.getSession().getAttribute("erroFixo" + i) : "")
 			+ "</label></td>"
 			+ "</tr>"
@@ -68,26 +69,26 @@ for(int i = 0; i < nfixos; i++){
 %>
 <!-- Linha do botão de adicionar inputs para fixos  -->
 <tr>
-<td></td><td style="text-align: left;"><input type="submit" value="Adicionar Fixo" formaction="servletAdicionaFixo" formmethod="post"></td>
+<td style="border-style: none;"></td><td style="text-align: left; border-style: none;"><input type="submit" value="Adicionar Fixo" formaction="servletAdicionaFixo" formmethod="post"></td>
 </tr>
 <!-- Linha para input de destino -->
 <tr>
 <td style="text-align: right;"><label for="iddestino">Aeródromo de destino: </label></td><td style="text-align: left;"><input type="text" placeholder="código ICAO" name="destino" id="iddestino" value="<% if(request.getAttribute("destino_digitado") != null) out.print(request.getAttribute("destino_digitado")); %>"></td>
 </tr>
 <tr>
-<td></td><td style="text-align: left;"><label style="color: #990000; font-size: 13px;"><% if(request.getSession().getAttribute("erroDestino") != null) out.print(request.getSession().getAttribute("erroDestino")); %></label></td>
+<td style="border-style: none;"></td><td style="text-align: left; border-style: none;"><label style="color: #990000; font-size: 13px;"><% if(request.getSession().getAttribute("erroDestino") != null) out.print(request.getSession().getAttribute("erroDestino")); %></label></td>
 </tr>
 <!-- Linha para input de altitude -->
 <tr>
-<td style="text-align: right;"><label for="idaltitude">Altitude: </label></td>
-<td><input type="range" min="1000" max="14500" step="500" name="altitude" id="idaltitude" onchange="mostraAltitudeSelecionada(this.value);" value="<% if(request.getAttribute("altitude_escolhida") != null) {out.print(request.getAttribute("altitude_escolhida"));}else{out.print(3500);} %>">
+<td style="text-align: right; border-style: none;"><label for="idaltitude">Altitude: </label></td>
+<td style="border-style: none;"><input type="range" min="1000" max="14500" step="500" name="altitude" id="idaltitude" onchange="mostraAltitudeSelecionada(this.value);" value="<% if(request.getAttribute("altitude_escolhida") != null) {out.print(request.getAttribute("altitude_escolhida"));}else{out.print(3500);} %>">
 <label id="label_altitude"><% if(request.getAttribute("altitude_escolhida") != null) {out.print(request.getAttribute("altitude_escolhida"));}else{out.print(3500);} %>ft</label>
 </td>
 </tr>
 <!-- Linha para input de aeronave -->
 <tr>
-<td style="text-align: right;"><label for="idaeronave">Aeronave: </label></td>
-<td style="text-align: left;">
+<td style="text-align: right; border-style: none;"><label for="idaeronave">Aeronave: </label></td>
+<td style="text-align: left; border-style: none;">
 <select name="aeronave" id="idaeronave">
 <optgroup label="Minhas aeronaves">
 <%
@@ -95,7 +96,13 @@ for(int i = 0; i < nfixos; i++){
 	%>
 <% if (!aeronaves_usuario.isEmpty()) {
 	for (AeronavePersonalizada ap : aeronaves_usuario){
-		out.println("<option value=\"" + ap.getId() + "\">" + ap.getPrefixo() + "</option>");
+		out.print("<option value=\"" + ap.getId() + "\"");
+		if(request.getSession().getAttribute("aeronave_personalizada") != null){
+			if(request.getSession().getAttribute("aeronave_personalizada").equals("true") && request.getSession().getAttribute("id_aeronave").equals(ap.getId())){
+				out.print(" selected");
+			}
+		}
+		out.println(">" + ap.getPrefixo() + "</option>");
 	}
 } %>
 </optgroup>
@@ -105,15 +112,22 @@ for(int i = 0; i < nfixos; i++){
 	%>
 <% if (!aeronaves_padrao.isEmpty()) {
 	for (Aeronave a : aeronaves_padrao){
-		out.println("<option value=\"" + a.getTipo() + "\">" + a.getTipo() + "</option>");
+		out.print("<option value=\"" + a.getTipo() + "\"");
+		if(request.getSession().getAttribute("aeronave_personalizada") != null){
+			if(request.getSession().getAttribute("aeronave_personalizada").equals("false") && request.getSession().getAttribute("tipo_acft").equals(a.getTipo())){
+				out.print(" selected");
+			}
+		}
+		out.println(">" + a.getTipo() + "</option>");
 	}
 } %>
 </optgroup>
 </select>
 </td>
 </tr>
-<tr><td colspan="2" style="text-align: center;"><input type="submit" value="Gerar Navegação" formaction="servletCalculaNavegacao" formmethod="post"></td></tr>
+<tr><td colspan="2" style="text-align: center; border-style: none;"><input type="submit" value="Gerar Navegação" formaction="servletCalculaNavegacao" formmethod="post"></td></tr>
 </table>
+<input type="hidden" name="id_planejamento" value="<%= (request.getAttribute("id_planejamento") != null ? request.getAttribute("id_planejamento") : 0) %>">
 </form>
 </div>
 
@@ -136,37 +150,37 @@ for(int i = 0; i < nfixos; i++){
 		consumototal += consumo;
 		out.println("<tr" + 
 				((i%2 == 0) ? " class=\"linha-par\"" : "") +
-				"><td  class=\"nome\">" + 
+				"><td  class=\"nome\" style=\"border-top: 1px solid;\">" + 
 				(trechos.get(i).getNomeInicio() != null ? trechos.get(i).getNomeInicio() : trechos.get(i).getInicio().latitudeToString() + "<br>" + trechos.get(i).getInicio().longitudeToString())
-				+"</td><td class=\"nome\">/</td><td class=\"nome\">" +
+				+"</td><td class=\"nome\" style=\"border-top: 1px solid;\">/</td><td class=\"nome\">" +
 				(trechos.get(i).getNomeFim() != null ? trechos.get(i).getNomeFim() : trechos.get(i).getFim().latitudeToString() + "<br>" + trechos.get(i).getFim().longitudeToString())
-				+"</td><td  class=\"rumo\">" +
+				+"</td><td  class=\"rumo\" style=\"border-top: 1px solid;\">" +
 				String.format("%03d",trechos.get(i).getRumo()) + "°"
-				+"</td><td  class=\"distancia\">" + 
+				+"</td><td  class=\"distancia\" style=\"border-top: 1px solid;\">" + 
 				String.format("%.1f",distancia) + "nm"
-				+ "</td><td class=\"tempo\">" + 
+				+ "</td><td class=\"tempo\" style=\"border-top: 1px solid;\">" + 
 				String.format("%02d",(tempo/60)) + ":" + String.format("%02d",(tempo%60))
-				+ "</td><td class=\"consumo\">" +
+				+ "</td><td class=\"consumo\" style=\"border-top: 1px solid;\">" +
 				consumo + " L"
 				+ "</td></tr>");
 	}
-	out.println("<tr><td></td><td></td><td></td><td class=\"total\">Total:</td><td class=\"total distancia\">" + 
+	out.println("<tr><td style=\"border-top: 1px solid;\"></td><td style=\"border-top: 1px solid;\"></td><td style=\"border-top: 1px solid;\"></td><td class=\"total\" style=\"border-top: 1px solid;\">Total:</td><td class=\"total distancia\" style=\"border-top: 1px solid;\">" + 
 			String.format("%.1fnm",distanciatotal) 
-			+ "</td><td class=\"total tempo\">" + 
+			+ "</td><td class=\"total tempo\" style=\"border-top: 1px solid;\">" + 
 			String.format("%02d",(tempototal/60)) + ":" + String.format("%02d",(tempototal%60)) 
-			+ "</td><td class=\"consumo\">" + 
+			+ "</td><td class=\"consumo\" style=\"border-top: 1px solid;\">" + 
 			consumototal + " L"
 			+ "</td></tr></table>");
 	out.println("<div>");
 	out.println("<form>");
 	out.println("<input type=\"submit\" value=\"Gerar Kneeboard\" formaction=\"servletKneeboard\" formmethod=\"post\">");
-	out.println("<input type=\"submit\" value=\"Salvar Navegação\" formaction=\"servletSalvarPlanejamento\" formmethod=\"post\">");
+	out.println("<input type=\"hidden\" name=\"id_planejamento_salvo\" " + (request.getAttribute("id_planejamento") != null ? "value=\""+request.getAttribute("id_planejamento")+"\" " : "value=\"0\" ") + "><input type=\"submit\" value=\"Salvar Navegação\" formaction=\"servletSalvarPlanejamento\" formmethod=\"post\">");
 	out.println("</form>");
-	out.println("</div>");
 	out.println("</div>");
 	if(request.getAttribute("salvo") != null){
 		out.println(request.getAttribute("salvo"));
 	}
+	out.println("</div>");
 }%>
  <script src="./js/rota.js"></script>
  <script src="./js/mostraAltitude.js"></script>
