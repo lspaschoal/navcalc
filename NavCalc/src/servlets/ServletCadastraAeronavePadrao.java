@@ -8,11 +8,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import controller.AeronavePersonalizada;
-import model.ModelAeronavePersonalizada;
+import controller.Aeronave;
+import model.ModelAeronave;
 
-@WebServlet("/servletCadastraAeronavePersonalizada") // mapeamento do servlet
-public class ServletCadastraAeronavePersonalizada extends HttpServlet {
+@WebServlet("/servletCadastraAeronavePadrao") // mapeamento do servlet
+public class ServletCadastraAeronavePadrao extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -23,16 +23,7 @@ public class ServletCadastraAeronavePersonalizada extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		try {
 			boolean cadastro_valido = true;
-
-			String prefixo = request.getParameter("prefixo");
-			if (prefixo == null || prefixo.equals("")) {
-				request.setAttribute("erroPrefixo", "*O preenchimento do prefixo é obrigatório.");
-				cadastro_valido = false;
-			} else {
-				request.setAttribute("erroPrefixo", "");
-			}
 
 			String tipo = request.getParameter("tipo");
 			if (tipo == null || tipo.equals("")) {
@@ -127,30 +118,23 @@ public class ServletCadastraAeronavePersonalizada extends HttpServlet {
 			}
 
 			if (cadastro_valido) {
-				AeronavePersonalizada ap = new AeronavePersonalizada();
-				ap.setIdUsuario((Long) request.getSession().getAttribute("id"));
-				ap.setPrefixo(prefixo);
-				ap.setTipo(tipo);
-				ap.setVelocidadeCruzeiro(velocidade_cruzeiro);
-				ap.setVelocidadeSubida(velocidade_subida);
-				ap.setVelocidadeDescida(velocidade_descida);
-				ap.setRazaoSubida(razao_subida);
-				ap.setRazaoDescida(razao_descida);
-				ap.setConsumo(consumo);
-				ModelAeronavePersonalizada map = new ModelAeronavePersonalizada();
-				if (map.salvar(ap)) {
+				Aeronave a = new Aeronave();
+				a.setTipo(tipo);
+				a.setVelocidadeCruzeiro(velocidade_cruzeiro);
+				a.setVelocidadeSubida(velocidade_subida);
+				a.setVelocidadeDescida(velocidade_descida);
+				a.setRazaoSubida(razao_subida);
+				a.setRazaoDescida(razao_descida);
+				a.setConsumo(consumo);
+				ModelAeronave ma = new ModelAeronave();
+				if (ma.salvar(a)) {
 					request.setAttribute("status", "<p class=\"display-success\">Aeronave cadastrada com sucesso!</p>");
 				} else {
-					request.setAttribute("status", "<p class=\"display-error\">ERRO: " + map.getMsgErro() + "</p>");
+					request.setAttribute("status", "<p class=\"display-error\">ERRO: " + ma.getMsgErro() + "</p>");
 				}
 			} else {
 				request.setAttribute("status", "");
 			}
-			request.getRequestDispatcher("cadastrarAeronave.jsp").forward(request, response);
-		} catch (NullPointerException npe) {
-			request.setAttribute("msgErro", "É necessário estar logado para acessar o sistema.");
-			request.getRequestDispatcher("login.jsp").forward(request, response);
-		}
-
+			request.getRequestDispatcher("cadastrarAeronavePadrao.jsp").forward(request, response);
 	}
 }

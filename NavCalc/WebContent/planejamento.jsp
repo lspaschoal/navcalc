@@ -31,7 +31,7 @@ try{
 		<form name="gerencia_aeronaves" action="servletGerenciaAeronaves" method="post"><a href="javascript:navegacao.submit()">Aeronaves</a> </form> 
 		<form name="logoff" action="servletLogoff" method="post"><label class="logoff" onclick="javascript:logoff.submit()">Logoff</label></form>
 		<label class="usuario"><%= request.getSession().getAttribute("email").toString() %></label>
-</div>
+	</div>
 
 <div class="card">
 <form>
@@ -152,7 +152,7 @@ for(int i = 0; i < nfixos; i++){
 				((i%2 == 0) ? " class=\"linha-par\"" : "") +
 				"><td  class=\"nome\" style=\"border-top: 1px solid;\">" + 
 				(trechos.get(i).getNomeInicio() != null ? trechos.get(i).getNomeInicio() : trechos.get(i).getInicio().latitudeToString() + "<br>" + trechos.get(i).getInicio().longitudeToString())
-				+"</td><td class=\"nome\" style=\"border-top: 1px solid;\">/</td><td class=\"nome\">" +
+				+"</td><td class=\"nome\" style=\"border-top: 1px solid;\">/</td><td class=\"nome\" style=\"border-top: 1px solid;\">" +
 				(trechos.get(i).getNomeFim() != null ? trechos.get(i).getNomeFim() : trechos.get(i).getFim().latitudeToString() + "<br>" + trechos.get(i).getFim().longitudeToString())
 				+"</td><td  class=\"rumo\" style=\"border-top: 1px solid;\">" +
 				String.format("%03d",trechos.get(i).getRumo()) + "°"
@@ -173,7 +173,7 @@ for(int i = 0; i < nfixos; i++){
 			+ "</td></tr></table>");
 	out.println("<div>");
 	out.println("<form>");
-	out.println("<input type=\"submit\" value=\"Gerar Kneeboard\" formaction=\"servletKneeboard\" formmethod=\"post\">");
+	out.println("<input type=\"submit\" value=\"Gerar Kneeboard\" formaction=\"kneeboard.jsp\" formmethod=\"post\">");
 	out.println("<input type=\"hidden\" name=\"id_planejamento_salvo\" " + (request.getAttribute("id_planejamento") != null ? "value=\""+request.getAttribute("id_planejamento")+"\" " : "value=\"0\" ") + "><input type=\"submit\" value=\"Salvar Navegação\" formaction=\"servletSalvarPlanejamento\" formmethod=\"post\">");
 	out.println("</form>");
 	out.println("</div>");

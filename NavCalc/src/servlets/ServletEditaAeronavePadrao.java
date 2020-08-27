@@ -8,11 +8,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import controller.AeronavePersonalizada;
-import model.ModelAeronavePersonalizada;
+import controller.Aeronave;
+import model.ModelAeronave;
 
-@WebServlet("/servletEditaAeronavePersonalizada") // mapeamento do servlet
-public class ServletEditaAeronavePersonalizada extends HttpServlet{
+@WebServlet("/servletEditaAeronavePadrao") // mapeamento do servlet
+public class ServletEditaAeronavePadrao extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -27,9 +27,9 @@ public class ServletEditaAeronavePersonalizada extends HttpServlet{
 		long idAeronave = Long.parseLong(request.getParameter("idAeronave"));
 		
 		// Carregando a aeronave
-		ModelAeronavePersonalizada map = new ModelAeronavePersonalizada();
-		AeronavePersonalizada ap = map.getAeronave(idAeronave);
-		request.setAttribute("aeronave", ap);
+		ModelAeronave ma = new ModelAeronave();
+		Aeronave a = ma.getAeronave(idAeronave);
+		request.setAttribute("aeronave", a);
 		
 		// Definindo as mensagens de erro como vazias
 		request.setAttribute("erroPrefixo", "");
@@ -43,7 +43,7 @@ public class ServletEditaAeronavePersonalizada extends HttpServlet{
 		request.setAttribute("status", "");
 		
 		// Redirecionando para a página de edição
-		request.getRequestDispatcher("editaAeronave.jsp").forward(request, response);
+		request.getRequestDispatcher("editaAeronavePadrao.jsp").forward(request, response);
 		
 	}
 }

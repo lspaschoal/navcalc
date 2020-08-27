@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import controller.Aeronave;
+import controller.AeronavePersonalizada;
 
 public class ModelAeronave {
 	private Connection conn = null;
@@ -68,12 +69,71 @@ public class ModelAeronave {
 		return false;
 	}
 	
+	public boolean atualizar(Aeronave a) {
+		try {
+			abrirConn();
+			if (conn != null && !conn.isClosed()) {
+				String sql = "UPDATE aeronaves_padrao SET tipo=?,velocidadeCruzeiro=?,velocidadeSubida=?,velocidadeDescida=?,razaoSubida=?,razaoDescida=?,consumo=? WHERE id=?;";
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				stmt.setString(1, a.getTipo());
+				stmt.setInt(2, a.getVelocidadeCruzeiro());
+				stmt.setInt(3, a.getVelocidadeSubida());
+				stmt.setInt(4, a.getVelocidadeDescida());
+				stmt.setInt(5, a.getRazaoSubida());
+				stmt.setInt(6, a.getRazaoDescida());
+				stmt.setLong(7, a.getConsumo());
+				stmt.setLong(8, a.getId());
+				if (stmt.executeUpdate() == 1) {
+					msgErro = "";
+					fecharConn();
+					return true;
+				} else {
+					msgErro = "Erro: Ocorreu um erro durante o cadastro. Por favor, tente novamente.";
+				}
+			} else {
+				msgErro = "Erro: Falha na conexão com o banco de dados.";
+			}
+		} catch (SQLException e) {
+			msgErro = "Erro de SQL: " + e.toString();
+		}
+		fecharConn();
+		return false;
+	}
+	
 	public ArrayList<Aeronave> listaAeronaves(){
 		ArrayList<Aeronave> lista = new ArrayList<Aeronave>();
 		try {
 			abrirConn();
 			if (conn != null && !conn.isClosed()) {
 				String sql = "SELECT tipo,velocidadeCruzeiro,velocidadeSubida,velocidadeDescida,razaoSubida,razaoDescida,consumo,id FROM aeronaves_padrao ORDER BY tipo;";
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				ResultSet rs = stmt.executeQuery();
+				while (rs.next()) {
+					Aeronave acft = new Aeronave();
+					acft.setTipo(rs.getString(1));
+					acft.setVelocidadeCruzeiro(rs.getInt(2));
+					acft.setVelocidadeSubida(rs.getInt(3));
+					acft.setVelocidadeDescida(rs.getInt(4));
+					acft.setRazaoSubida(rs.getInt(5));
+					acft.setRazaoDescida(rs.getInt(6));
+					acft.setConsumo(rs.getInt(7));
+					acft.setId(rs.getLong(8));
+					lista.add(acft);
+				}
+			}
+		} catch (SQLException e) {
+			msgErro = "Erro de SQL: " + e.toString();
+		}
+		fecharConn();
+		return lista;
+	}
+	
+	public ArrayList<Aeronave> listaAeronaves(String parametro){
+		ArrayList<Aeronave> lista = new ArrayList<Aeronave>();
+		try {
+			abrirConn();
+			if (conn != null && !conn.isClosed()) {
+				String sql = "SELECT tipo,velocidadeCruzeiro,velocidadeSubida,velocidadeDescida,razaoSubida,razaoDescida,consumo,id FROM aeronaves_padrao ORDER BY "+ parametro +";";
 				PreparedStatement stmt = conn.prepareStatement(sql);
 				ResultSet rs = stmt.executeQuery();
 				while (rs.next()) {

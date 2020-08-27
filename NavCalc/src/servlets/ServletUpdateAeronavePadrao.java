@@ -8,11 +8,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import controller.AeronavePersonalizada;
-import model.ModelAeronavePersonalizada;
+import controller.Aeronave;
+import model.ModelAeronave;
 
-@WebServlet("/servletUpdateAeronavePersonalizada") // mapeamento do servlet
-public class ServletUpdateAeronavePersonalizada extends HttpServlet{
+@WebServlet("/servletUpdateAeronavePadrao") // mapeamento do servlet
+public class ServletUpdateAeronavePadrao extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -27,8 +27,8 @@ public class ServletUpdateAeronavePersonalizada extends HttpServlet{
 		long idAeronave = Long.parseLong(request.getParameter("idAeronave"));
 		
 		// Carregando a aeronave
-		ModelAeronavePersonalizada map = new ModelAeronavePersonalizada();
-		AeronavePersonalizada ap = map.getAeronave(idAeronave);
+		ModelAeronave ma = new ModelAeronave();
+		Aeronave a = ma.getAeronave(idAeronave);
 		
 		/*
 		 * Validação e atualização dos dados
@@ -37,23 +37,13 @@ public class ServletUpdateAeronavePersonalizada extends HttpServlet{
 		// Controle de validade das informações
 		boolean cadastro_valido = true;
 		
-		// Prefixo
-		String prefixo = request.getParameter("prefixo");
-		if(prefixo == null || prefixo.equals("")) {
-			request.setAttribute("erroPrefixo", "*O preenchimento do prefixo é obrigatório.");
-			cadastro_valido = false;
-		}else {
-			ap.setPrefixo(prefixo);
-			request.setAttribute("erroPrefixo", "");
-		}
-		
 		// Tipo
 		String tipo = request.getParameter("tipo");
 		if(tipo == null || tipo.equals("")) {
 			request.setAttribute("erroTipo", "*O preenchimento do tipo é obrigatório.");
 			cadastro_valido = false;
 		}else {
-			ap.setTipo(tipo);
+			a.setTipo(tipo);
 			request.setAttribute("erroTipo", "");
 		}
 		
@@ -68,7 +58,7 @@ public class ServletUpdateAeronavePersonalizada extends HttpServlet{
 				request.setAttribute("erroVC", "*A velocidade de cruzeiro tem que ser maior do que 0.");
 				cadastro_valido = false;
 			}else {
-				ap.setVelocidadeCruzeiro(velocidade_cruzeiro);
+				a.setVelocidadeCruzeiro(velocidade_cruzeiro);
 				request.setAttribute("erroVC", "");
 			}
 		}
@@ -84,7 +74,7 @@ public class ServletUpdateAeronavePersonalizada extends HttpServlet{
 				request.setAttribute("erroVS", "*A velocidade de subida tem que ser maior do que 0.");
 				cadastro_valido = false;
 			}else {
-				ap.setVelocidadeSubida(velocidade_subida);
+				a.setVelocidadeSubida(velocidade_subida);
 				request.setAttribute("erroVS", "");
 			}
 		}
@@ -100,7 +90,7 @@ public class ServletUpdateAeronavePersonalizada extends HttpServlet{
 				request.setAttribute("erroVD", "*A velocidade de descida tem que ser maior do que 0.");
 				cadastro_valido = false;
 			}else {
-				ap.setVelocidadeDescida(velocidade_descida);
+				a.setVelocidadeDescida(velocidade_descida);
 				request.setAttribute("erroVD", "");
 			}
 		}
@@ -116,7 +106,7 @@ public class ServletUpdateAeronavePersonalizada extends HttpServlet{
 				request.setAttribute("erroRS", "*A razão de subida tem que ser maior do que 0.");
 				cadastro_valido = false;
 			}else {
-				ap.setRazaoSubida(razao_subida);
+				a.setRazaoSubida(razao_subida);
 				request.setAttribute("erroRS", "");
 			}
 		}
@@ -132,7 +122,7 @@ public class ServletUpdateAeronavePersonalizada extends HttpServlet{
 				request.setAttribute("erroRD", "*A razão de descida tem que ser maior do que 0.");
 				cadastro_valido = false;
 			}else {
-				ap.setRazaoDescida(razao_descida);
+				a.setRazaoDescida(razao_descida);
 				request.setAttribute("erroRD", "");
 			}
 		}
@@ -149,7 +139,7 @@ public class ServletUpdateAeronavePersonalizada extends HttpServlet{
 				request.setAttribute("erroConsumo", "*O consumo tem que ser maior do que 0.");
 				cadastro_valido = false;
 			}else {
-				ap.setConsumo(consumo);
+				a.setConsumo(consumo);
 				request.setAttribute("erroConsumo", "");
 			}
 		}
@@ -158,10 +148,10 @@ public class ServletUpdateAeronavePersonalizada extends HttpServlet{
 		 * Persistência no banco de dados
 		 */
 		if(cadastro_valido) {
-			if(map.atualizar(ap)) {
+			if(ma.atualizar(a)) {
 				request.setAttribute("status", "<p class=\"display-success\">Aeronave atualizada com sucesso!</p>");
 			}else {
-				request.setAttribute("status", "<p class=\"display-error\">ERRO: " + map.getMsgErro() + "</p>");
+				request.setAttribute("status", "<p class=\"display-error\">ERRO: " + ma.getMsgErro() + "</p>");
 			}
 		}else {
 			request.setAttribute("status", "");
@@ -170,8 +160,8 @@ public class ServletUpdateAeronavePersonalizada extends HttpServlet{
 		/*
 		 * Redirecionamento para a página de edição com status da atualização
 		 */
-		request.setAttribute("aeronave", ap);
-		request.getRequestDispatcher("editaAeronave.jsp").forward(request, response);
+		request.setAttribute("aeronave", a);
+		request.getRequestDispatcher("editaAeronavePadrao.jsp").forward(request, response);
 		
 	}
 }

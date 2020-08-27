@@ -135,7 +135,7 @@ public class ModelPlanejamentoSalvo {
 		try {
 			abrirConn();
 			if (conn != null && !conn.isClosed()) {
-				String sql = "SELECT id,id_usuario,id_origem,id_destino,aeronave_personalizada,id_aeronave,altitude,dmg,rota FROM planejamentos_salvos WHERE id_usuario=?;";
+				String sql = "SELECT id,id_usuario,id_origem,id_destino,aeronave_personalizada,id_aeronave,altitude,dmg,rota FROM planejamentos_salvos WHERE id_usuario=? ORDER BY id_origem,id_destino,id_aeronave;";
 				PreparedStatement stmt = conn.prepareStatement(sql);
 				stmt.setLong(1, id_usuario);
 				ResultSet rs = stmt.executeQuery();

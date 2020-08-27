@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import controller.Usuario;
 
@@ -151,7 +152,7 @@ public class ModelUsuario {
 				ResultSet rs = stmt.executeQuery();
 				if (rs.next()) {
 					user = new Usuario();
-					user.setId(1);
+					user.setId(rs.getLong(1));
 					user.setDtNascimento(sqlParaData(rs.getString(2)));
 					user.setEmail(rs.getString(3));
 					user.setNome(rs.getString(4));
@@ -165,6 +166,131 @@ public class ModelUsuario {
 		return user;
 	}
 	
+	public ArrayList<Usuario> listaUsuariosId() {
+		ArrayList<Usuario> lista = new ArrayList<Usuario>();
+		try {
+			abrirConn();
+			if (conn != null && !conn.isClosed()) {
+				String sql = "SELECT * FROM usuarios ORDER BY id;";
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				ResultSet rs = stmt.executeQuery();
+				while (rs.next()) {
+					Usuario user = new Usuario();
+					user.setId(rs.getLong(1));
+					user.setDtNascimento(sqlParaData(rs.getString(2)));
+					user.setEmail(rs.getString(3));
+					user.setNome(rs.getString(4));
+					user.setSobrenome(rs.getString(6));
+					lista.add(user);
+				}
+			}
+		} catch (SQLException e) {
+			msgErro = "Erro de SQL: " + e.toString();
+		}
+		fecharConn();
+		return lista;
+	}
+	
+	public ArrayList<Usuario> listaUsuariosEmail() {
+		ArrayList<Usuario> lista = new ArrayList<Usuario>();
+		try {
+			abrirConn();
+			if (conn != null && !conn.isClosed()) {
+				String sql = "SELECT * FROM usuarios ORDER BY email;";
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				ResultSet rs = stmt.executeQuery();
+				while (rs.next()) {
+					Usuario user = new Usuario();
+					user.setId(rs.getLong(1));
+					user.setDtNascimento(sqlParaData(rs.getString(2)));
+					user.setEmail(rs.getString(3));
+					user.setNome(rs.getString(4));
+					user.setSobrenome(rs.getString(6));
+					lista.add(user);
+				}
+			}
+		} catch (SQLException e) {
+			msgErro = "Erro de SQL: " + e.toString();
+		}
+		fecharConn();
+		return lista;
+	}
+	
+	public ArrayList<Usuario> listaUsuariosNome() {
+		ArrayList<Usuario> lista = new ArrayList<Usuario>();
+		try {
+			abrirConn();
+			if (conn != null && !conn.isClosed()) {
+				String sql = "SELECT * FROM usuarios ORDER BY nome;";
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				ResultSet rs = stmt.executeQuery();
+				while (rs.next()) {
+					Usuario user = new Usuario();
+					user.setId(rs.getLong(1));
+					user.setDtNascimento(sqlParaData(rs.getString(2)));
+					user.setEmail(rs.getString(3));
+					user.setNome(rs.getString(4));
+					user.setSobrenome(rs.getString(6));
+					lista.add(user);
+				}
+			}
+		} catch (SQLException e) {
+			msgErro = "Erro de SQL: " + e.toString();
+		}
+		fecharConn();
+		return lista;
+	}
+	
+	public ArrayList<Usuario> listaUsuariosSobrenome() {
+		ArrayList<Usuario> lista = new ArrayList<Usuario>();
+		try {
+			abrirConn();
+			if (conn != null && !conn.isClosed()) {
+				String sql = "SELECT * FROM usuarios ORDER BY sobrenome;";
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				ResultSet rs = stmt.executeQuery();
+				while (rs.next()) {
+					Usuario user = new Usuario();
+					user.setId(rs.getLong(1));
+					user.setDtNascimento(sqlParaData(rs.getString(2)));
+					user.setEmail(rs.getString(3));
+					user.setNome(rs.getString(4));
+					user.setSobrenome(rs.getString(6));
+					lista.add(user);
+				}
+			}
+		} catch (SQLException e) {
+			msgErro = "Erro de SQL: " + e.toString();
+		}
+		fecharConn();
+		return lista;
+	}
+	
+	public ArrayList<Usuario> listaUsuariosDN() {
+		ArrayList<Usuario> lista = new ArrayList<Usuario>();
+		try {
+			abrirConn();
+			if (conn != null && !conn.isClosed()) {
+				String sql = "SELECT * FROM usuarios ORDER BY dt_nascimento;";
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				ResultSet rs = stmt.executeQuery();
+				while (rs.next()) {
+					Usuario user = new Usuario();
+					user.setId(rs.getLong(1));
+					user.setDtNascimento(sqlParaData(rs.getString(2)));
+					user.setEmail(rs.getString(3));
+					user.setNome(rs.getString(4));
+					user.setSobrenome(rs.getString(6));
+					lista.add(user);
+				}
+			}
+		} catch (SQLException e) {
+			msgErro = "Erro de SQL: " + e.toString();
+		}
+		fecharConn();
+		return lista;
+	}
+	
 	public String dataParaSql(LocalDate dt) {
 		return dt.getYear() + "-" + dt.getMonthValue() + "-" + dt.getDayOfMonth();
 	}
@@ -175,50 +301,9 @@ public class ModelUsuario {
 		int dia = Integer.parseInt(data.substring(8));
 		return LocalDate.of(ano, mes, dia);
 	}
-//
-//	public boolean salvar(Usuario user) {
-//		Session session = HibernateUtil.abrirSession();
-//		try {
-//			session.saveOrUpdate(user);
-//		} catch (Exception e) {
-//			msgErro = "Erro: " + e.getMessage();
-//			return false;
-//		}
-//		HibernateUtil.fecharSession();
-//		return true;
-//	}
-//
-//	public Long verificarLogin(String usuario, String senha) {
-//		Session session = HibernateUtil.abrirSession();
-//		session.beginTransaction();
-//		try {
-//			String sql = "SELECT id FROM usuarios WHERE email = :email and senha = :senha";
-//			Query query = session.createQuery(sql);
-//			query.setParameter("email", usuario);
-//			query.setParameter("senha", senha);
-//			@SuppressWarnings("rawtypes")
-//			List list = query.getResultList();
-//			if (list == null || list.size() == 0) {
-//				return (long) -1;
-//			} else {
-//				return Long.parseLong(list.get(0).toString());
-//			}
-//		} catch (Exception e) {
-//			System.out.println("Erro no verificarLogin(): "+e.toString());
-//			return (long) -1;
-//		}
-//	}
-//	
-//	public Usuario getUsuario(long id) {
-//		Session session = HibernateUtil.abrirSession();
-//		session.beginTransaction();
-//		return session.get(Usuario.class, id);
-//	}
-//
+
 	public String getMsgErro() {
 		return msgErro;
 	}
-	
-	
 
 }

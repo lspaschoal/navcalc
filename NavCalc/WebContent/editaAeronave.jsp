@@ -8,8 +8,15 @@
 <title>Editar Aeronave</title>
 <link rel="stylesheet" type="text/css" href="css/painel.css">
 <link rel="stylesheet" type="text/css" href="css/estilos.css">
+<style>
+.card{
+margin: 0 auto;
+box-shadow:0px 13px 21px -5px rgba(0.5, 0.5, 0.5, 1);
+background: white;
+}
+</style>
 </head>
-<body>
+<body style="background: #ebe9e4">
 <% try{
 	String usuario = request.getSession().getAttribute("email").toString();
 }catch(NullPointerException npe){
@@ -27,7 +34,7 @@
 <form action="servletUpdateAeronavePersonalizada" method="post" onsubmit="return confirm('Tem certeza de que deseja salvar essas alterações?')">
 <% AeronavePersonalizada aeronave = (AeronavePersonalizada) request.getAttribute("aeronave"); %>
 <input type="hidden" name="idAeronave" value="<%= aeronave.getId() %>">
-<table>
+<table style="margin: 50px auto; box-shadow: 1px 13px 21px 5px rgba(0.5, 1, 1, 1); background: white;">
 <tr><td>Prefixo:</td><td><input type="text" name="prefixo" value="<%= aeronave.getPrefixo() %>" placeholder="Digite o prefixo"><label class="fs-15 erro"><%= request.getAttribute("erroPrefixo") %></label></td></tr>
 <tr><td>Tipo:</td><td><input type="text" name="tipo" value="<%= aeronave.getTipo() %>" placeholder="Digite o ICAO do tipo"><label class="fs-15 erro"><%= request.getAttribute("erroTipo") %></label></td></tr>
 <tr><td>Velocidade de Cruzeiro:</td><td><input type="number" name="velocidade_cruzeiro" value="<%= aeronave.getVelocidadeCruzeiro() %>" placeholder="Velocidade em nós"><label class="fs-15 erro"><%= request.getAttribute("erroVC") %></label></td></tr>
