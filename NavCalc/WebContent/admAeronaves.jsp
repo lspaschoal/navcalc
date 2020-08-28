@@ -54,15 +54,53 @@ text-decoration: none;
 }
 .btn_voltar{
 font-family: sans-serif;
-font-size: 50px;
+font-size:25px;
 font-weight: bold;
 color: rgb(46,204,113);
 text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+position: fixed;
+top: 10px;
+left: 50px;
+background: white;
+width: 110px;
+}
+.btn_logoff{
+display: inline-block;
+color: white;
+background-color: #b30000;
+text-align: center;
+font-family: sans-serif;
+font-size: 20px;
+width: 100px;
+height: 30px;
+padding-top: 10px;
+}
+.btn_logoff:hover{
+background-color: #800000;
+font-weight: bolder;
 }
 </Style>
 </head>
 <body style="background: #303030">
+<% try{
+	String usuario = request.getSession().getAttribute("email").toString();
+	if(!usuario.equals("admin")){
+		request.setAttribute("msgErro", "É necessário estar logado como admin para acessar esse sistema.");
+		request.getRequestDispatcher("login.jsp").forward(request, response);
+	}
+}catch(NullPointerException npe){
+	request.setAttribute("msgErro", "É necessário estar logado para acessar o sistema.");
+	request.getRequestDispatcher("login.jsp").forward(request, response);
+} %>
+<div style="text-align: right"><form name="logoff" action="servletLogoff" method="post"><a href="javascript:logoff.submit()" style="text-decoration: none;"><label class="btn_logoff">Logoff</label></a></form></div>
 <div style="text-align: center; margin: 80px;"><span class="titulo">Lista de Aeronaves Padrão</span></div>
+<div style="text-align: center; margin: 50px;">
+<a href="cadastrarAeronavePadrao.jsp" style="text-decoration: none;">
+<img src="images/icons/novo.png"><br>
+<label class="titulo" style="font-size: 30px;">Adicionar Nova Aeronave</label>
+</a>
+</div>
+<div class="btn_voltar"><a href="admin.jsp" style="text-decoration: none; margin: 0 auto;"><img src="images/icons/voltar.png" style="width: 25px;"><span style="color: rgb(46,204,113)"> Voltar</span></a></div>
 <% 
 	ArrayList<Aeronave> lista = (ArrayList<Aeronave>) request.getAttribute("lista_aeronaves"); 
 	if(lista.isEmpty()){
@@ -92,15 +130,8 @@ text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 			out.println("<td class=\"centro\"><form name=\"edita_aeronave\" action=\"servletExcluiAeronavePadrao\" method=\"post\" onsubmit=\"return confirm('Tem certeza de que deseja excluir essa aeronave?')\"><input name=\"idAeronave\" type=\"hidden\" value=\"" + lista.get(i).getId() + "\"><input type=\"image\" class=\"ico_editar_excluir\" src=\"images/icons/excluir.png\" alt=\"submit\"></form></td>");
 			out.println("</tr>");
 		}
-		out.println("<tr><td colspan=\"10\" style=\"text-align: center;\"><a href=\"admin.jsp\"><img src=\"images/icons/voltar.png\"><span class=\"btn_voltar\">Voltar</span></a></td></tr>");
 		out.println("</table>");
 	}
 %>
-<div style="text-align: center; margin: 50px;">
-<a href="cadastrarAeronavePadrao.jsp" style="text-decoration: none;">
-<img src="images/icons/novo.png"><br>
-<label class="titulo" style="font-size: 30px;">Adicionar Nova</label>
-</a>
-</div>
 </body>
 </html>

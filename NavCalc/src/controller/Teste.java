@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import model.ModelAerodromo;
 import model.ModelDados;
 
 public class Teste {
@@ -56,12 +57,10 @@ public class Teste {
 //			System.out.println("Erro: " + e.toString());
 //		}
 		
-		Fixo f = new Fixo();
-		f.setLatitude(-10.5);
-		f.setLongitude(20.3);
-
-		System.out.println(f.latitudeToString().replace("°", "").replace("'", "").replace("\"", ""));
-		System.out.println(f.longitudeToString().replace("°", "").replace("'", "").replace("\"", ""));
+		ModelAerodromo ma = new ModelAerodromo();
+		Aerodromo ad = ma.getAerodromo(10000l);;
+		ad.setIcao("abcd");
+		System.out.println(ad.getNome());
 		
 	}
 

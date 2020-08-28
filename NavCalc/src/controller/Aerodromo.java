@@ -55,7 +55,6 @@ public class Aerodromo extends Coordenada {
 	
 	public Aerodromo getAerodromo(String icao) {
 		Aerodromo ad = null;
-		Connection conn = null;
 		ModelAerodromo ma = new ModelAerodromo();
 		ad = ma.getAerodromo(icao);
 		return ad;
@@ -69,7 +68,6 @@ public class Aerodromo extends Coordenada {
 	// Setters
 	public void setNome(String nome) {
 		this.nome = nome;
-
 	}
 
 	public void setIcao(String icao) {
@@ -86,7 +84,15 @@ public class Aerodromo extends Coordenada {
 
 	}
 	
+	public void setId(long id) {
+		this.id = id;
+	}
+	
 	//geters{
+	
+	public long getId() {
+		return id;
+	}
 
 	public String getIcao() {
 		return icao;

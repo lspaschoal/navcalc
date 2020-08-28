@@ -25,6 +25,11 @@ font-size:25px;
 font-weight: bold;
 color: rgb(46,204,113);
 text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+position: fixed;
+top: 10px;
+left: 50px;
+background: white;
+width: 110px;
 }
 .erro{
 color: #941e00;
@@ -44,7 +49,6 @@ background-color: rgb(255, 249, 242);
 color: rgb(211, 0, 0);
 text-align: center;
 }
-
 .display-success{
 width: 400px;
 border: 1px solid #D8D8D8;
@@ -58,10 +62,37 @@ color: green;
 text-align: center;
 margin-top: 30px;
 }
+.btn_logoff{
+display: inline-block;
+color: white;
+background-color: #b30000;
+text-align: center;
+font-family: sans-serif;
+font-size: 20px;
+width: 100px;
+height: 30px;
+padding-top: 10px;
+}
+.btn_logoff:hover{
+background-color: #800000;
+font-weight: bolder;
+}
 </style>
 </head>
 <body style="background: #303030">
+<% try{
+	String usuario = request.getSession().getAttribute("email").toString();
+	if(!usuario.equals("admin")){
+		request.setAttribute("msgErro", "É necessário estar logado como admin para acessar esse sistema.");
+		request.getRequestDispatcher("login.jsp").forward(request, response);
+	}
+}catch(NullPointerException npe){
+	request.setAttribute("msgErro", "É necessário estar logado para acessar o sistema.");
+	request.getRequestDispatcher("login.jsp").forward(request, response);
+} %>
+<div style="text-align: right"><form name="logoff" action="servletLogoff" method="post"><a href="javascript:logoff.submit()" style="text-decoration: none;"><label class="btn_logoff">Logoff</label></a></form></div>
 <div style="text-align: center; margin: 80px;"><span class="titulo">Cadastrar Aeronave</span></div>
+<div class="btn_voltar"><form name="aeronaves" action="servletAeronavesPadrao" method="post"><a href="javascript:aeronaves.submit()" style="text-decoration: none;"><img src="images/icons/voltar.png" style="width: 25px;"><span style="color: rgb(46,204,113);"> Voltar</span></a></form></div>
 <form action="servletCadastraAeronavePadrao" method="post" onsubmit="return confirm('Tem certeza de que deseja salvar essas alterações?')">
 <table class="card">
 <tr><td>Tipo:</td><td><input type="text" name="tipo" value="<% if(request.getAttribute("tipo") != null){out.print(request.getAttribute("tipo"));} %>" placeholder="Digite o ICAO do tipo"><label class="erro"><% if(request.getAttribute("erroTipo") != null){out.print(request.getAttribute("erroTipo"));} %></label></td></tr>
@@ -76,6 +107,5 @@ margin-top: 30px;
 <tr><td></td><td></td></tr>
 </table>
 </form>
-<form name="aeronaves" action="servletAeronavesPadrao" method="post"><div style="background: white; width: 110px;"><a href="javascript:aeronaves.submit()" style="text-decoration: none;"><img src="images/icons/voltar.png" style="width: 25px;"><span class="btn_voltar"> Voltar</span></a></div></form>
 </body>
 </html>

@@ -53,6 +53,7 @@ public class ServletLogin extends HttpServlet {
 			request.getRequestDispatcher("login.jsp").forward(request, response);
 		}else {
 			if(email.equals("admin") && senha.equals("admin")) {
+				request.getSession().setAttribute("email", "admin");
 				request.getRequestDispatcher("admin.jsp").forward(request, response);
 			}else {
 				Usuario usuario = new Usuario();

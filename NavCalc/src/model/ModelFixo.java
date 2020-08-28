@@ -107,7 +107,95 @@ public class ModelFixo {
 		return lista;
 	}
 	
+	public ArrayList<Fixo> listaFixosPor(String parametro) {
+		ArrayList<Fixo> lista = new ArrayList<Fixo>();
+		try {
+			abrirConn();
+			if (conn != null && !conn.isClosed()) {
+				String sql = "SELECT id,nome,latitude,longitude FROM fixos ORDER BY " + parametro + ";";
+				PreparedStatement stmt = conn.prepareStatement(sql);;
+				ResultSet rs = stmt.executeQuery();
+				while (rs.next()) {
+					Fixo fixo = new Fixo();
+					fixo.setId(rs.getLong(1));
+					fixo.setNome(rs.getString(2));
+					fixo.setLatitude(rs.getDouble(3));
+					fixo.setLongitude(rs.getDouble(4));
+					lista.add(fixo);
+				}
+			}
+		} catch (SQLException e) {
+			msgErro = "Erro de SQL: " + e.toString();
+		}
+		fecharConn();
+		return lista;
+	}
+	
 	public String getMsgErro() {
 		return msgErro;
+	}
+
+	public void excluirFixo(long idFixo) {
+		try {
+			abrirConn();
+			if (conn != null && !conn.isClosed()) {
+				String sql = "DELETE FROM fixos WHERE id=?;";
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				stmt.setLong(1, idFixo);
+				stmt.executeQuery();
+			}
+		} catch (SQLException e) {
+			msgErro = "Erro de SQL: " + e.toString();
+		}
+		fecharConn();
+	}
+
+	public boolean atualizaFixo(Fixo f) {
+		try {
+			abrirConn();
+			if (conn != null && !conn.isClosed()) {
+				String sql = "UPDATE fixos set nome=?,latitude=?,longitude=? where id=?;";
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				stmt.setString(1, f.getNome());
+				stmt.setDouble(2, f.getLatitude());
+				stmt.setDouble(3, f.getLongitude());
+				stmt.setLong(4,f.getId());
+				if (stmt.executeUpdate() == 1) {
+					msgErro = "";
+					fecharConn();
+					return true;
+				} else {
+					msgErro = "Erro: Ocorreu um erro durante o cadastro. Por favor, tente novamente.";
+				}
+			}
+		} catch (SQLException e) {
+			msgErro = "Erro de SQL: " + e.toString();
+		}
+		fecharConn();
+		return false;
+	}
+
+	public boolean cadastraFixo(Fixo f) {
+		try {
+			abrirConn();
+			if (conn != null && !conn.isClosed()) {
+				String sql = "INSERT INTO fixos (nome,latitude,longitude) VALUES (?,?,?);";
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				stmt.setString(1, f.getNome());
+				stmt.setDouble(2, f.getLatitude());
+				stmt.setDouble(3, f.getLongitude());
+				if (stmt.executeUpdate() == 1) {
+					msgErro = "";
+					fecharConn();
+					return true;
+				} else {
+					msgErro = "Erro: Ocorreu um erro durante o cadastro. Por favor, tente novamente.";
+				}
+			}
+		} catch (SQLException e) {
+			msgErro = "Erro de SQL: " + e.toString();
+		}
+		fecharConn();
+		return false;
 	}
 }

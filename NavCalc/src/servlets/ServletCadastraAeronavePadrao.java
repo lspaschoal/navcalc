@@ -118,19 +118,23 @@ public class ServletCadastraAeronavePadrao extends HttpServlet {
 			}
 
 			if (cadastro_valido) {
-				Aeronave a = new Aeronave();
-				a.setTipo(tipo);
-				a.setVelocidadeCruzeiro(velocidade_cruzeiro);
-				a.setVelocidadeSubida(velocidade_subida);
-				a.setVelocidadeDescida(velocidade_descida);
-				a.setRazaoSubida(razao_subida);
-				a.setRazaoDescida(razao_descida);
-				a.setConsumo(consumo);
 				ModelAeronave ma = new ModelAeronave();
-				if (ma.salvar(a)) {
-					request.setAttribute("status", "<p class=\"display-success\">Aeronave cadastrada com sucesso!</p>");
-				} else {
-					request.setAttribute("status", "<p class=\"display-error\">ERRO: " + ma.getMsgErro() + "</p>");
+				if(ma.getAeronave(tipo) != null) {
+					request.setAttribute("status", "<p class=\"display-error\">ERRO: Já existe uma aeronave desse tipo cadastrada.</p>");
+				}else {
+					Aeronave a = new Aeronave();
+					a.setTipo(tipo);
+					a.setVelocidadeCruzeiro(velocidade_cruzeiro);
+					a.setVelocidadeSubida(velocidade_subida);
+					a.setVelocidadeDescida(velocidade_descida);
+					a.setRazaoSubida(razao_subida);
+					a.setRazaoDescida(razao_descida);
+					a.setConsumo(consumo);
+					if (ma.salvar(a)) {
+						request.setAttribute("status", "<p class=\"display-success\">Aeronave cadastrada com sucesso!</p>");
+					} else {
+						request.setAttribute("status", "<p class=\"display-error\">ERRO: " + ma.getMsgErro() + "</p>");
+					}
 				}
 			} else {
 				request.setAttribute("status", "");

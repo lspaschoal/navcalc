@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page import="controller.Aeronave" %>
+<%@ page import="controller.Fixo" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Admin > Aeronaves > Editar Aeronave</title>
+<title>Admin > Aeronaves > Editar Fixo</title>
 <style>
 .card{
 margin: 0 auto;
@@ -62,6 +62,9 @@ color: green;
 text-align: center;
 margin-top: 30px;
 }
+input[type="number"]{
+width: 90px;
+}
 .btn_logoff{
 display: inline-block;
 color: white;
@@ -72,6 +75,7 @@ font-size: 20px;
 width: 100px;
 height: 30px;
 padding-top: 10px;
+
 }
 .btn_logoff:hover{
 background-color: #800000;
@@ -91,22 +95,25 @@ font-weight: bolder;
 	request.getRequestDispatcher("login.jsp").forward(request, response);
 } %>
 <div style="text-align: right"><form name="logoff" action="servletLogoff" method="post"><a href="javascript:logoff.submit()" style="text-decoration: none;"><label class="btn_logoff">Logoff</label></a></form></div>
-<div style="text-align: center; margin: 100px;"><span class="titulo">Editar Aeronave</span></div>
-<div class="btn_voltar"><form name="aeronaves" action="servletAeronavesPadrao" method="post"><a href="javascript:aeronaves.submit()" style="text-decoration: none;"><img src="images/icons/voltar.png" style="width: 25px;"><span style="color: rgb(46,204,113);"> Voltar</span></a></form></div>
-<form action="servletUpdateAeronavePadrao" method="post" onsubmit="return confirm('Tem certeza de que deseja salvar essas alterações?')">
-<% Aeronave aeronave = (Aeronave) request.getAttribute("aeronave"); %>
-<input type="hidden" name="idAeronave" value="<%= aeronave.getId() %>">
+<div style="text-align: center; margin: 100px;"><span class="titulo">Editar Fixo</span></div>
+<div class="btn_voltar"><form name="voltar" action="servletFixosNome" method="post"><a href="javascript:voltar.submit()" style="text-decoration: none;"><img src="images/icons/voltar.png" style="width: 25px;"><span style="color: rgb(46,204,113);"> Voltar</span></a></form></div>
+<form action="servletUpdateFixo" method="post" onsubmit="return confirm('Tem certeza de que deseja salvar essas alterações?')">
+<% Fixo fixo = (Fixo) request.getAttribute("fixo");%>
+<input type="hidden" name="idFixo" value="<%= fixo.getId() %>">
 <table class="card">
-<tr><td>Tipo:</td><td><input type="text" name="tipo" value="<%= aeronave.getTipo() %>" placeholder="Digite o ICAO do tipo"><label class="erro"><%= request.getAttribute("erroTipo") %></label></td></tr>
-<tr><td>Velocidade de Cruzeiro:</td><td><input type="number" name="velocidade_cruzeiro" value="<%= aeronave.getVelocidadeCruzeiro() %>" placeholder="Velocidade em nós"><label class="erro"><%= request.getAttribute("erroVC") %></label></td></tr>
-<tr><td>Velocidade de Subida:</td><td><input type="number" name="velocidade_subida" value="<%= aeronave.getVelocidadeSubida() %>" placeholder="Velocidade em nós"><label class="erro"><%= request.getAttribute("erroVS") %></label></td></tr>
-<tr><td>Velocidade de Descida:</td><td><input type="number" name="velocidade_descida" value="<%= aeronave.getVelocidadeDescida() %>" placeholder="Velocidade em nós"><label class="erro"><%= request.getAttribute("erroVD") %></label></td></tr>
-<tr><td>Razão de subida:</td><td><input type="number" name="razao_subida" value="<%= aeronave.getRazaoSubida() %>" placeholder="Pés/min"><label class="erro"><%= request.getAttribute("erroRS") %></label></td></tr>
-<tr><td>Razão de descida:</td><td><input type="number" name="razao_descida" value="<%= aeronave.getRazaoDescida() %>" placeholder="Pés/min"><label class="erro"><%= request.getAttribute("erroRD") %></label></td></tr>
-<tr><td>Consumo:</td><td><input type="number" name="consumo" value="<%= aeronave.getConsumo() %>" placeholder="Litros/hora"><label class="erro"><%= request.getAttribute("erroConsumo") %></label></td></tr>
+<tr><td>Nome:</td><td><input type="text" name="nome" value="<%= fixo.getNome() %>" placeholder="Digite nome do aeródromo"><label class="erro"><%= request.getAttribute("erroNome") %></label></td></tr>
+<tr><td>Latitude:</td><td><input type="number" name="latGraus" value="<%= request.getAttribute("latGraus") %>" placeholder="Graus">°
+						  <input type="number" name="latMin" value="<%= request.getAttribute("latMin") %>" placeholder="Minutos">'
+						  <input type="number" name="latSeg" value="<%= request.getAttribute("latSeg") %>" placeholder="Segundos">"
+						  <select name="NS"><option value="N">N</option><option value="S" selected>S</option></select>
+						  <label class="erro"><%= request.getAttribute("erroLatitude") %></label></td></tr>
+<tr><td>Longitude:</td><td><input type="number" name="lonGraus" value="<%= request.getAttribute("lonGraus") %>" placeholder="Graus">°
+						   <input type="number" name="lonMin" value="<%= request.getAttribute("lonMin") %>" placeholder="Minutos">'
+						   <input type="number" name="lonSeg" value="<%= request.getAttribute("lonSeg") %>" placeholder="Segundos">"
+						   <select name="WE"><option value="E">E</option><option value="W" selected>W</option></select>
+						   <label class="erro"><%= request.getAttribute("erroLongitude") %></label></td></tr>
 <tr><td></td><td><input type="submit" value="Salvar Alterações"></td></tr>
-<tr><td colspan=2><%= request.getAttribute("status") %></td>
-</tr>
+<tr><td colspan=3><%= request.getAttribute("status") %></td></tr>
 </table>
 </form>
 </body>
