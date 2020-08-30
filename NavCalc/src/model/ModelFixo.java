@@ -112,7 +112,13 @@ public class ModelFixo {
 		try {
 			abrirConn();
 			if (conn != null && !conn.isClosed()) {
-				String sql = "SELECT id,nome,latitude,longitude FROM fixos ORDER BY " + parametro + ";";
+				String ordem = "";
+				if(parametro.equalsIgnoreCase("latitude") || parametro.equalsIgnoreCase("longitude")) {
+					ordem = " DESC";
+				}else {
+					ordem = " ASC";
+				}
+				String sql = "SELECT id,nome,latitude,longitude FROM fixos ORDER BY " + parametro + ordem + ";";
 				PreparedStatement stmt = conn.prepareStatement(sql);;
 				ResultSet rs = stmt.executeQuery();
 				while (rs.next()) {

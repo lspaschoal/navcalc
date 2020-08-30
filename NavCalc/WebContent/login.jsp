@@ -46,7 +46,7 @@
 						<span class="focus-input100-2"></span>
 					</div>
 					
-					<div style="background: #ff6666; color: white;"><%= request.getAttribute("msgErro") %></div>
+					<div style="background: #ff6666; color: white;"><% if(request.getAttribute("msgErro") != null){out.println(request.getAttribute("msgErro"));} %></div>
 					
 
 					<div class="container-login100-form-btn m-t-20">

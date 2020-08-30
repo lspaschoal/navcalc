@@ -65,8 +65,18 @@ font-weight: bolder;
 <td>
 	<form name="relatorioplanejamentos" action="servletRelatorioPlanejamentos" method="post">
 	<a style="text-decoration: none;" href="javascript:relatorioplanejamentos.submit()">
-	<span style="font-size: 50px; color: rgb(23, 198, 148); font-family: sans-serif">Planejamentos de voo</span>
+	<span style="font-size: 50px; color: rgb(23, 198, 148); font-family: sans-serif">Planejamentos de voo Salvos</span>
 	<p style="color: rgb(3, 168, 216); margin-top: 0;"><i>Lista de planejamentos salvos, agrupados por usuário</i></p>
+	</a>
+	</form>
+</td>
+</tr>
+<tr>
+<td>
+	<form name="relatorioaeronaves" action="servletRelatorioAeronavesPersonalizadas" method="post">
+	<a style="text-decoration: none;" href="javascript:relatorioaeronaves.submit()">
+	<span style="font-size: 50px; color: rgb(23, 198, 148); font-family: sans-serif">Aeronaves de Usuários Salvas</span>
+	<p style="color: rgb(3, 168, 216); margin-top: 0;"><i>Lista de aeronaves salvas, agrupadas por usuário</i></p>
 	</a>
 	</form>
 </td>

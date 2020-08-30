@@ -49,13 +49,27 @@ public class ModelDados {
 	
 	public ModelDados() {
 		try {
+			// Abrindo conexão para criação do banco de dados caso não exista
+			String driver = "org.mariadb.jdbc.Driver";
+			Class.forName(driver);
+			String url = "jdbc:mysql://localhost:3306/";
+			String user = "root";
+			String password = "";
+			conn = DriverManager.getConnection(url, user, password);
+			String sql = "CREATE DATABASE IF NOT EXISTS navcalc;";
+			PreparedStatement stmt = conn.prepareStatement(sql);			
+			ResultSet rs = stmt.executeQuery();
 			// Utilizando o Hibernate para a persistência das classes
 			Session session;
 			SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 			session = sessionFactory.openSession();
 			session.close();
 		} catch (HibernateException e) {
-			msgErro = ("Erro de Hibernate: " + e.toString());
+			msgErro = ("Erro de Hibernate, pra variar: " + e.toString());
+		} catch (ClassNotFoundException e) {
+			msgErro = "Erro de conexão: " + e.toString();
+		} catch (SQLException e) {
+			msgErro = "Erro de SQL: " + e.toString();
 		}
 	}
 	

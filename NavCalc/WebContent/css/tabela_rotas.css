@@ -1,0 +1,21 @@
+table{
+	width: 1200px;
+}
+th, td {
+  border-bottom: 2px solid #ddd;
+  padding: 5px;
+}
+
+th{
+	font-weight: 900;
+	font-size: 20px;
+}
+
+td{
+	text-align: center;
+	font-size: 15px;
+}
+
+.ico_editar_excluir{
+	width: 35px;
+}

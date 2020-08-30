@@ -45,6 +45,10 @@ public class ServletNavegacao extends HttpServlet {
 
 			// Definindo a navegação como vazia
 			request.getSession().setAttribute("navegacao", "");
+			
+			// Definindo as mensagens de erro como vazias
+			request.getSession().setAttribute("erroOrigem", "");
+			request.getSession().setAttribute("erroDestino", "");
 
 			// Direcionando para o jsp de planejamento
 			request.getRequestDispatcher("planejamento.jsp").forward(request, response);

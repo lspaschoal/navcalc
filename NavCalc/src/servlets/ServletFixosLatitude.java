@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import controller.Fixo;
 import model.ModelFixo;
 
-@WebServlet("/servletFixoLatitude") // mapeamento do servlet
+@WebServlet("/servletFixosLatitude") // mapeamento do servlet
 public class ServletFixosLatitude extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;

@@ -11,7 +11,7 @@
 
 <body>
 <% try{
-	String usuario = request.getSession().getAttribute("email").toString();
+	String id = request.getSession().getAttribute("id").toString();
 }catch(NullPointerException npe){
 	request.setAttribute("msgErro", "É necessário estar logado para acessar o sistema.");
 	request.getRequestDispatcher("login.jsp").forward(request, response);

@@ -14,18 +14,18 @@
 <body>
 <% 
 try{
-	String usuario = request.getSession().getAttribute("email").toString();
+	String id = request.getSession().getAttribute("id").toString();
 }catch(NullPointerException npe){
 	request.setAttribute("msgErro", "É necessário estar logado para acessar o sistema.");
 	request.getRequestDispatcher("login.jsp").forward(request, response);
 } %>
 	<div class="topnav">
 		<a href="painel.jsp">Painel Principal</a>
-  		<form name="navegacao" action="servletNavegacao" method="post"><a class="active" href="javascript:navegacao.submit()">Planejamento</a></form> 
+		<form name="navegacao" action="servletNavegacao" method="post"><a href="javascript:navegacao.submit()">Planejamento</a></form> 
 		<a href="rotas_salvas.jsp">Rotas Salvas</a>
-		<form name="gerencia_aeronaves" action="servletGerenciaAeronaves" method="post"><a href="javascript:navegacao.submit()">Aeronaves</a> </form> 
+		<form name="gerencia_aeronaves" action="servletGerenciaAeronaves" method="post"><a href="javascript:gerencia_aeronaves.submit()">Aeronaves</a> </form> 
 		<form name="logoff" action="servletLogoff" method="post"><label class="logoff" onclick="javascript:logoff.submit()">Logoff</label></form>
-		<label class="usuario"><%= request.getSession().getAttribute("email").toString() %></label>
+		<label class="usuario"><%=request.getSession().getAttribute("email")%></label>
 	</div>
 	<div style="width: 786px; margin: 0 auto;">
 	<% if(!request.getSession().getAttribute("navegacao").equals("")){

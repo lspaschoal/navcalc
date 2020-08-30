@@ -126,7 +126,13 @@ public class ModelAerodromo {
 		try {
 			abrirConn();
 			if (conn != null && !conn.isClosed()) {
-				String sql = "SELECT id,icao,nome,elevacao,latitude,longitude FROM aerodromos ORDER BY "+ parametro +";";
+				String ordem = "";
+				if(parametro.equalsIgnoreCase("latitude") || parametro.equalsIgnoreCase("longitude")) {
+					ordem = " DESC";
+				}else {
+					ordem = " ASC";
+				}
+				String sql = "SELECT id,icao,nome,elevacao,latitude,longitude FROM aerodromos ORDER BY " + parametro + ordem + ";";
 				PreparedStatement stmt = conn.prepareStatement(sql);
 				ResultSet rs = stmt.executeQuery();
 				while (rs.next()) {

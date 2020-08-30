@@ -109,8 +109,8 @@ font-weight: bolder;
 		out.println("<table class=\"card\">");
 		out.println("<tr>");
 		out.println("<th><form name=\"organizaNome\" action=\"servletFixosNome\" method=\"post\"><a href=\"javascript:organizaNome.submit()\"><img src=\"images/icons/sort.png\">Nome</a></form></th>");
-		out.println("<th><form name=\"organizaLatitude\" action=\"servletFixosLatitude\" method=\"post\"><a href=\"javascript:organizaLatitude.submit()\"><img src=\"images/icons/sort.png\">Elevação</a></form></th>");
-		out.println("<th><form name=\"organizaLongitude\" action=\"servletFixosLongitude\" method=\"post\"><a href=\"javascript:organizaLongitude.submit()\"><img src=\"images/icons/sort.png\">Latitude</a></form></th>");
+		out.println("<th><form name=\"organizaLatitude\" action=\"servletFixosLatitude\" method=\"post\"><a href=\"javascript:organizaLatitude.submit()\"><img src=\"images/icons/sort.png\">Latitude</a></form></th>");
+		out.println("<th><form name=\"organizaLongitude\" action=\"servletFixosLongitude\" method=\"post\"><a href=\"javascript:organizaLongitude.submit()\"><img src=\"images/icons/sort.png\">Longitude</a></form></th>");
 		out.println("<th colspan=\"2\"></td></tr>");
 		for(int i = 0; i < lista.size(); i++){
 			out.println("<tr style=\"padding: 0;\"><td colspan=\"10\" style=\"padding: 0;\"><hr></td></tr>");

@@ -57,9 +57,9 @@ public class ServletSalvarPlanejamento extends HttpServlet {
 		} else {
 			// salvando um planejamento novo no banco de dados <p class=\"display-success\">
 			if (ps.salvar(planejamento)) {
-				request.setAttribute("salvo", "<p class=\"display-success\">Planejamento salvo com sucesso!</p>");
+				request.setAttribute("salvo", "<p class=\"display-success\" style=\"width: 80%; margin: 0 auto;\">Planejamento salvo com sucesso!</p>");
 			} else {
-				request.setAttribute("salvo", "<p class=\"display-error\">" + ps.getMsgErro() + "</p>");
+				request.setAttribute("salvo", "<p class=\"display-error\" style=\"width: 80%; margin: 0 auto;\">" + ps.getMsgErro() + "</p>");
 			}
 		}
 
